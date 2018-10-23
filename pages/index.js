@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import axios from 'axios';
 import Items from '../components/Items';
 
@@ -6,18 +5,19 @@ import Items from '../components/Items';
 const Index = (props) => {
         return (
             <React.Fragment>
-                <Items items={props.shows}/>
+                <Items items={props.items}/>
             </React.Fragment>
         )
 }
 
 
 Index.getInitialProps = async function() {
-    const res = await axios.get('https://api.tvmaze.com/search/shows?q=batman')
-    // console.log(res.data)
-    //console.log(`Show data fetched. Count: ${data.length}`)
+    // CHANGE!!!!! to REAL PATH!! WHY RELATIVE нельзя???
+    const res = await axios.get('http://localhost:3000/api/items/all')
+
     return {
-        shows: res.data
+        items: res.data.items,
+        count: res.data.count
     }  
 } 
 

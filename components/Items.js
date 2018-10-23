@@ -1,6 +1,13 @@
-import React from 'react'
-import Link from 'next/link'
+import React from 'react';
+import styled from 'styled-components';
+import Item from './Item';
 
+const ItemsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: ${props => props.theme.maxWidthFrontAll};
+  margin: 0 auto;
+`;
 
 class Items extends React.Component {
     render() {
@@ -8,12 +15,9 @@ class Items extends React.Component {
         return (
             <React.Fragment>
                 <h1>All Items</h1>
-                <ul>
-                    {this.props.items.map((movie, i) => {
-                        //return <li key={i}><Link  as={`/items/${movie.show.name}`} href={`/item?name=${movie.show.name}`}><a>{movie.show.name}</a></Link></li>
-                        return <li key={i}><Link  as={`/items/${movie.show.name}`} href={ {pathname: '/item', query: {id: movie.show.name}} }><a>{movie.show.name}</a></Link></li>
-                    })}
-                </ul>
+                    <ItemsList>{this.props.items.map((item, i) => {
+                        return <Item item={item} key={i}/>
+                    })}</ItemsList>
             </React.Fragment>
         )
     }

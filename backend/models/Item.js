@@ -29,86 +29,76 @@ const itemSchema = new mongoose.Schema({
     trim: true,
   }, 
   schedule: {
-    type: {
-      type: String,
+    monday: {
+      open: {
+        type: String,
+        trim: true,
+      },
+      close: {
+        type: String,
+        trim: true,
+      }
     },
-    monday: [{
-      type: String,
-      trim: true,
-      validate: {
-        validator: function(v) {
-          return /^\d{2}\:\d{2}$/i.test(v);
-        },
-        message: '{VALUE} Неверный Формат!'
+    tuesday: {
+      open: {
+        type: String,
+        trim: true,
       },
-      required: [true, 'Введите Вемя!']
-    }],
-    tuesday: [{
-      type: String,
-      trim: true,
-      validate: {
-        validator: function(v) {
-          return /^\d{2}\:\d{2}$/i.test(v);
-        },
-        message: '{VALUE} Неверный Формат!'
+      close: {
+        type: String,
+        trim: true,
+      }
+    },
+    wednesday: {
+      open: {
+        type: String,
+        trim: true,
       },
-      required: [true, 'Введите Вемя!']
-    }],
-    wednesday: [{
-      type: String,      
-      trim: true,
-      validate: {
-        validator: function(v) {
-          return /^\d{2}\:\d{2}$/i.test(v);
-        },
-        message: '{VALUE} Неверный Формат!'
+      close: {
+        type: String,
+        trim: true,
+      }
+    },
+    thursday: {
+      open: {
+        type: String,
+        trim: true,
       },
-      required: [true, 'Введите Вемя!']
-    }],
-    thursday: [{
-      type: String,
-      trim: true,
-      validate: {
-        validator: function(v) {
-          return /^\d{2}\:\d{2}$/i.test(v);
-        },
-        message: '{VALUE} Неверный Формат!'
+      close: {
+        type: String,
+        trim: true,
+      }
+    },
+    friday: {
+      open: {
+        type: String,
+        trim: true,
       },
-      required: [true, 'Введите Вемя!']
-    }],
-    friday: [{
-      type: String,
-      trim: true,
-      validate: {
-        validator: function(v) {
-          return /^\d{2}\:\d{2}$/i.test(v);
-        },
-        message: '{VALUE} Неверный Формат!'
+      close: {
+        type: String,
+        trim: true,
+      }
+    },
+    saturday: {
+      open: {
+        type: String,
+        trim: true,
       },
-      required: [true, 'Введите Вемя!']
-    }],
-    saturday: [{
-      type: String,
-      trim: true,
-      validate: {
-        validator: function(v) {
-          return /^\d{2}\:\d{2}$/i.test(v);
-        },
-        message: '{VALUE} Неверный Формат!'
+      close: {
+        type: String,
+        trim: true,
+      }
+    },
+    sunday: {
+      open: {
+        type: String,
+        trim: true,
       },
-      required: [true, 'Введите Вемя!']
-    }],
-    sunday: [{
-      type: String,
-      trim: true,
-      validate: {
-        validator: function(v) {
-          return /^\d{2}\:\d{2}$/i.test(v);
-        },
-        message: '{VALUE} Неверный Формат!'
-      },
-      required: [true, 'Введите Вемя!']
-    }],
+      close: {
+        type: String,
+        trim: true,
+      }
+    }
   },
   location: {
     type: {
@@ -126,23 +116,23 @@ const itemSchema = new mongoose.Schema({
   },
 });
   
-//   itemSchema.pre('save', async function(next) {
-//     if (!this.isModified('name')) {
-//       next();
-//       return;
-//     }
-//     this.slug = slugify(this.name).toLowerCase();
+  itemSchema.pre('save', async function(next) {
+    if (!this.isModified('name')) {
+      next();
+      return;
+    }
+    this.slug = slugify(this.name).toLowerCase();
   
-//     // find other companies that have a slug of comp, comp-1, comp-2
-//     const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
-//     // find on this.constructor - because Company has not been created yet...
-//     const companiesWithSlug = await this.constructor.find({ slug: slugRegEx });
-//     if (companiesWithSlug.length) {
-//       this.slug = `${this.slug}-${companiesWithSlug.length + 1}`;
-//     }
-//     next();
-//     //TODO - make more resilien so slugs are unique
-//   });
+    // find other companies that have a slug of comp, comp-1, comp-2
+    const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
+    // find on this.constructor - because Company has not been created yet...
+    const companiesWithSlug = await this.constructor.find({ slug: slugRegEx });
+    if (companiesWithSlug.length) {
+      this.slug = `${this.slug}-${companiesWithSlug.length + 1}`;
+    }
+    next();
+    //TODO - make more resilien so slugs are unique
+  });
   
   
   

@@ -1,10 +1,5 @@
-import styled from 'styled-components';
-import Head from 'next/head';
-
-
-
+import axios from 'axios';
 import FormStyles from './styles/FormStyles';
-
 
 class AddForm extends React.Component {
     
@@ -21,44 +16,39 @@ class AddForm extends React.Component {
         errors: {}
     }
 
-    validateHourStart = () => {
-        let hourStart = this.state.hourStart
+    handleScheduleChange = (e) => {
+        const value = e.target.value;
+        const name = e.target.name;
+        const index = e.target.attributes[0].value;
 
-        let errors = {}
-        let formIsValid = true;
-        
-        const regex = new RegExp(/^\d{2}\:\d{2}$/i);
-
-        if (!regex.test(hourStart)) {
-            formIsValid = false;
-            errors['hourStart'] = '* Введите часы в указанном формате!'
-        } else {
-            formIsValid = true;
-        }
-
-        this.setState({errors: errors});
-        return formIsValid;
+            if ( index === '0') {
+                this.setState({ schedule: {...this.state.schedule, [`${name}`]: {...this.state.schedule[`${name}`], open: value }}})
+            }
+            if ( index === '1') {
+                this.setState({ schedule: {...this.state.schedule, [`${name}`]: {...this.state.schedule[`${name}`], close: value }}})
+            }    
 
     }
 
-    validateHourEnd = () => {
-        let hourEnd = this.state.hourEnd
-        let errors = {}
+
+    validateHours = () => {
+        let days = this.state.schedule;
+        let errors = {};
         let formIsValid = true;
-        
         const regex = new RegExp(/^\d{2}\:\d{2}$/i);
 
-        if (!regex.test(hourEnd)) {
-            formIsValid = false;
-            errors['hourEnd'] = '* Введите часы в указанном формате!'
-        } else {
-            formIsValid = true;
-        }
-
+        Object.entries(days).map((res, i) => {
+            if (!regex.test(res[1].open) || !regex.test(res[1].close)) {
+                formIsValid = false;
+                errors[`${res[0]}`] = '* Введите часы в указанном формате!'
+            }
+       
+        })
         this.setState({errors: errors});
         return formIsValid;
-
     }
+
+
 
     validatePhone = () => {
         let phone = this.state.phone
@@ -79,55 +69,48 @@ class AddForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+
+
         const item = {
             city: this.state.city,
             name: this.state.name,
             description: this.state.description,
             phone: this.state.phone,
             url: this.state.url,
-            days: this.state.days,
-            address: this.state.address,
-            lat: this.state.lat,
-            lng: this.state.lng
+            schedule: this.state.schedule,
+            location: {
+                coordinates: [this.state.lng, this.state.lat],
+                address: this.state.address
+            }
         }
 
         console.log(item)
 
-        if (!this.validateHourStart() || !this.validateHourEnd() || !this.validatePhone()) {
+        if (  !this.validatePhone() || !this.validateHours() ) {
             console.log('submit error')
-
+ 
         } else {
             console.log('all correct!!')
-            // axios.post('/api/items/create', item).then(res => {
-            //     console.log(res)
-            // }).catch((err) => {
-            //     console.log(err)
-            // })
-            this.setState({ city: '', name: '', description: '', phone: '', url: '', days: [], address: '', lat: '', lng: '' });
+            axios.post('/api/items/create', item).then(res => {
+                console.log(res)
+            }).catch((err) => {
+                console.log(err)
+            })
+            this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '' });
         }
 
     }
 
     handleChange = (e) => {   
         const name = e.target.name;
-        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+        const value = e.target.value;
 
-        if (e.target.type !== 'checkbox') {
-            this.setState({ [name]: value })
-        } else {
-            console.log(name)
-            if (value !== true) {
-                const index = this.state.days.indexOf(name); 
-                this.setState({ days: [...this.state.days.slice(0, index), ...this.state.days.slice(index + 1)]})
-            } else {
-                this.setState({days : [...this.state.days, name]})
-            }
-        }    
+        this.setState({ [name]: value })
     }
 
     handleAddressChange = (e) => {
         const address = e.target.value
-        const dropdown = new google.maps.places.Autocomplete(document.getElementById('autocomplete'))
+        const dropdown = new google.maps.places.Autocomplete(document.getElementById('autocomplete'))    
         dropdown.addListener('place_changed', () => {
             const place = dropdown.getPlace();
             const address = place.formatted_address
@@ -139,51 +122,53 @@ class AddForm extends React.Component {
         this.setState({ address })
     }
 
-    handleScheduleChange = (e) => {
-        const time = e.target.value;
-        console.log(time)
-    }
 
 
 
     render(){
 
 
-        const weekDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        //const weekDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        const weekDays = [
+            ['monday', 'Понедельник'], 
+            ['tuesday', 'Вторник'], 
+            ['wednesday', 'Среда'], 
+            ['thursday', 'Четверг'], 
+            ['friday', 'Пятница'], 
+            ['saturday', 'Суббота'], 
+            ['sunday', 'Воскресение']
+        ]
+
         return (
             <React.Fragment>
             <FormStyles onSubmit={this.handleSubmit}>
                 <fieldset>
+                    <label> Город
+                            <select  value={this.state.city}  type='text' placeholder='Город' name='city' onChange={this.handleChange} required>
+                            <option value=""></option>
+                            <option value="moscow">Москва</option>
+                            <option value="saint-petersburg">Санкт-Петербург</option>
+                            </select>
+                    </label>
 
-                        <label> Город
-                             <select  value={this.state.city}  type='text' placeholder='Город' name='city' onChange={this.handleChange} required>
-                                <option value=""></option>
-                                <option value="moscow">Москва</option>
-                                <option value="saint-petersburg">Санкт-Петербург</option>
-                             </select>
-                        </label>
-
-                        <label> Телефон
-                            <input  value={this.state.phone}  type='text' placeholder='7-985-555-2233' name='phone' onChange={this.handleChange} required />
-                            {this.state.errors.phone ? <span className="form__error">{this.state.errors.phone}</span> : ''}
-                        </label>
+                    <label> Телефон
+                        <input  value={this.state.phone}  type='text' placeholder='7-985-555-2233' name='phone' onChange={this.handleChange} required />
+                        {this.state.errors.phone ? <span className="form__error">{this.state.errors.phone}</span> : ''}
+                    </label>
 
 
-                        <label> Name
-                             {/* <input  value={this.state[res]}  name={res} onChange={this.handleChange}required/> */}
-                             <input  value={this.state.name}  type="text" placeholder='Name' name='name' onChange={this.handleChange} />
-                        </label>
+                    <label> Name
+                            <input  value={this.state.name}  type="text" placeholder='Name' name='name' onChange={this.handleChange} />
+                    </label>
 
-                        <label> Description
-                             {/* <input  value={this.state[res]}  name={res} onChange={this.handleChange}required/> */}
-                             <textarea  value={this.state.description}  type="text" placeholder='Description' name='description' onChange={this.handleChange} />
-                        </label>
-                
+                    <label> Description
+                            <textarea  value={this.state.description}  type="text" placeholder='Description' name='description' onChange={this.handleChange} />
+                    </label>
+            
 
-                        <label> Website
-                             {/* <input  value={this.state[res]}  name={res} onChange={this.handleChange}required/> */}
-                             <input  value={this.state.url}  type='url' placeholder="http://hello.ru" name="url" onChange={this.handleChange} />
-                        </label>
+                    <label> Website
+                            <input  value={this.state.url}  type='url' placeholder="http://hello.ru" name="url" onChange={this.handleChange} />
+                    </label>
                    
 
                     <label>
@@ -193,29 +178,39 @@ class AddForm extends React.Component {
                             placeholder="Введите адрес" 
                             name='address' 
                             onChange={this.handleAddressChange}
-                            value={this.state.address}/>
+                            value={this.state.address} required/>
                     </label>
                         
+                    <fieldset>
+                        <label>Часы Работы</label>
+                        <div className="workHours">
+                            {weekDays.map((res, i) => {
 
-                    <label>Часы Работы</label>
-                    <div className="workHours">
-                        {weekDays.map((res, i) => {
+                               const open = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].open : ''
+                               const close = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].close : ''
+                               
+                                return <label key={i}> 
+                                {res[1]}
+                                <input 
+                                    index={0}
+                                    type="text" 
+                                    name={res[0]}
+                                    placeholder='08:00'
+                                    value={open || ''}
+                                    onChange={this.handleScheduleChange} required />
+                                <input 
+                                    index={1}
+                                    type="text" 
+                                    name={res[0]}
+                                    placeholder='20:00'
+                                    value={close || ''}
+                                    onChange={this.handleScheduleChange} required />
+                                    {this.state.errors[`${res[0]}`] ? <span className="form__error">{this.state.errors[`${res[0]}`]}</span> : ''}
+                                </label>
+                            })}    
+                        </div>
+                    </fieldset>
 
-                            return <label key={i}> 
-                            {res}
-                            <input key={i} 
-                                    type="text" 
-                                    name={`${res}Open`} 
-                                    placeholder='Open'
-                                    onChange={this.handleScheduleChange} />
-                            <input key={i + 1} 
-                                    type="text" 
-                                    name={`${res}Close`} 
-                                    placeholder='Close'
-                                    onChange={this.handleScheduleChange} />
-                            </label>
-                        })}    
-                    </div>
                     <button type="submit">Add</button>
                 </fieldset>
             </FormStyles>

@@ -27,13 +27,16 @@ class SingleItem extends Component {
     return (
         <SingleItemStyles>
             <Head>
-              <title>Sick Fits | {this.props.id}</title>
+              <title>Клуб | {this.props.item.name}</title>
             </Head>
             {/* <img src={item.largeImage} alt={item.title} /> */}
             <div className="details">
-            <h1>{this.props.id}</h1>
-            {/* <h2>Viewing {item.title}</h2>
-            <p>{item.description}</p> */}
+            <h1>{this.props.item.name}</h1>
+            <p>{this.props.item.location.address}</p>
+            <p>{this.props.item.phone}</p>
+            <p>{this.props.item.url}</p>
+            <p>{this.props.item.description}</p>
+            {/* <p>{this.props.item.schedule}</p> */}
             </div>
         </SingleItemStyles>
         );

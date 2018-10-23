@@ -1,9 +1,10 @@
 import SingleItem from '../components/SingleItem';
+import axios from 'axios';
 
 const Item = (props) => (
 
   <React.Fragment>
-      <SingleItem id={props.query.id} />
+      <SingleItem {...props} />
     </React.Fragment>
 
 )
@@ -11,11 +12,10 @@ const Item = (props) => (
 
 Item.getInitialProps = async function(context) {
   const { id } = context.query
-  const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=a0145da41926c0453f66b9462ce90e0c`)
-  const movie = await res.json();
+  const res = await axios.get(`http://localhost:3000/api/items/single/${id}`)
+  const item = res.data
 
-  //console.log(movie.title)
-  return { movie };
+  return { item };
 }
 
 export default Item;

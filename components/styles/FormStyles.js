@@ -8,12 +8,15 @@ const FormStyles = styled.form`
     font-size: 1.5rem;
     line-height: 1.5;
     font-weight: 500;
-  .workHours {
+    .workHours {
     label {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      grid-template-columns: 120px 1fr 1fr;
       grid-gap: 10px;
       align-items: center;
+      .form__error {
+        grid-column: span 3;
+      }
     }
   }
   label {

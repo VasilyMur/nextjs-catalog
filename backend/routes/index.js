@@ -3,8 +3,11 @@ const router = express.Router()
 const itemsController = require('../controllers/itemsController')
 
 
-router.get('/', itemsController.getItems);
-router.get('/add', itemsController.addItem);
+
+//router.get('/add', itemsController.addItem);
+
+router.get('/all', itemsController.getItems);
+router.get('/single/:id', itemsController.getSingleItem);
 router.post('/create', itemsController.createItem);
 
 
