@@ -1,18 +1,19 @@
 import axios from 'axios';
 import FormStyles from './styles/FormStyles';
+import Router from 'next/router';
 
 class AddForm extends React.Component {
-    
+
     state = {
-        city: '',
-        name: '',
-        description: '',
-        phone: '',
-        url: '',
-        schedule: {},
-        address: '',
-        lng: '',
-        lat: '',
+        city: this.props.item && this.props.item.city || '',
+        name: this.props.item && this.props.item.name || '',
+        description: this.props.item && this.props.item.description || '',
+        phone: this.props.item && this.props.item.phone || '',
+        url:  this.props.item && this.props.item.url || '',
+        schedule: this.props.item && this.props.item.schedule || {},
+        address: this.props.item && this.props.item.address || '',
+        lng: this.props.item && this.props.item.lng || '',
+        lat:  this.props.item && this.props.item.lat || '',
         errors: {}
     }
 
@@ -67,10 +68,8 @@ class AddForm extends React.Component {
         return formIsValid;
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
-
-
         const item = {
             city: this.state.city,
             name: this.state.name,
@@ -90,15 +89,36 @@ class AddForm extends React.Component {
             console.log('submit error')
  
         } else {
-            console.log('all correct!!')
-            axios.post('/api/items/create', item).then(res => {
-                console.log(res)
-            }).catch((err) => {
-                console.log(err)
-            })
-            this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '' });
-        }
+            if (this.props.item) {
+                try {
+                    console.log('all correct!! --- UPDATING!')
+                    await axios.post(`/api/items/update/${this.props.id}`, item).then(res => {
+                        console.log(res)
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                    this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '' });
+    
+                    const id = this.props.item.slug;
+                    Router.push({
+                        pathname: '/item', query: {id: id}
+                    },  '/update/'+id);
+                    
+                } catch(err) {
+                    console.log(err)
+                }
 
+
+            } else {
+                console.log('all correct!!')
+                axios.post('/api/items/create', item).then(res => {
+                    console.log(res)
+                }).catch((err) => {
+                    console.log(err)
+                })
+                this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '' });
+            }
+        }
     }
 
     handleChange = (e) => {   

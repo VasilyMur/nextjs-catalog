@@ -18,6 +18,7 @@ exports.getItems = async (req, res) => {
         res.status(201).send(body)
     } catch(err) {
         console.log(err)
+        return res.status(500).json(err);
     }
 }
 
@@ -35,8 +36,8 @@ exports.getSingleItem = async (req, res, next) => {
         res.status(201).send(item)
     } catch(err) {
         console.log(err)
+        return res.status(500).json(err);
     }
-
 }
 
 exports.createItem = async (req, res) => {
@@ -45,6 +46,37 @@ exports.createItem = async (req, res) => {
         res.status(201).send(item) 
     } catch(err) {
         console.log(err)
+        return res.status(500).json(err);
+    }
+}
+
+// Get Item by ID
+exports.editItem = async (req, res, next) => {
+    try {
+        const item = await Item.findOne({ _id: req.params.id });
+    
+        //render 404 if no matching company found (not to display "someth went wrong")
+        if (!item) {
+          next();
+          return;
+        }
+
+        res.status(201).send(item)
+    } catch(err) {
+        console.log(err)
+        return res.status(500).json(err);
+    }
+}
+
+
+exports.updateItem = async (req, res) => {
+    try {
+        req.body.location.type = 'Point';
+        const item = await Item.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true }).exec();
+        res.status(201).send(item);
+    } catch(err) {
+        console.log(err)
+        return res.status(500).json(err);
     }
 
 }

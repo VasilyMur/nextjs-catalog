@@ -8,10 +8,10 @@ class Add extends React.Component {
     render() {
         return (
             <React.Fragment>
-            <h1>Add Item</h1>
-            <Container>
-                <AddForm />
-            </Container>
+                <h1>Add Item</h1>
+                <Container>
+                    <AddForm />
+                </Container>
             </React.Fragment>
         )
     }

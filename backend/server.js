@@ -28,10 +28,16 @@ nextApp.prepare()
   server.use('/api/items/', routes);
 
   server.get('/items/:id', (req, res) => {
-    const actualPage = '/item'
-    const queryParams = { id: req.params.id } 
-    nextApp.render(req, res, actualPage, queryParams)
-  })
+    const actualPage = '/item';
+    const queryParams = { id: req.params.id };
+    nextApp.render(req, res, actualPage, queryParams);
+  });
+
+  server.get('/update/:id', (req, res) => {
+    const actualPage = '/update';
+    const queryParams = { id: req.params.id };
+    nextApp.render(req, res, actualPage, queryParams);
+  });
 
   server.get('*', (req, res) => {
     return handle(req, res)

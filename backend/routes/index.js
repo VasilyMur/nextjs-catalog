@@ -10,5 +10,8 @@ router.get('/all', itemsController.getItems);
 router.get('/single/:id', itemsController.getSingleItem);
 router.post('/create', itemsController.createItem);
 
+router.get('/edit/:id', itemsController.editItem);
+router.post('/update/:id', itemsController.updateItem);
+
 
 module.exports = router;

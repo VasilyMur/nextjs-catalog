@@ -10,7 +10,7 @@ class Item extends React.Component {
                 <h2><Link as={`/items/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>{item.name}</a></Link></h2>
                 <p>{item.location.address}</p>
                 <p>Open:</p>
-                <p><Link as={`/items/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>Edit</a></Link></p>
+                <p><Link as={`/update/${item._id}`} href={ {pathname: '/update', query: {id: item._id}} }><a>Edit</a></Link></p>
             </ItemStyles>
         )
     }
