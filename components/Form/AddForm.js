@@ -1,6 +1,14 @@
 import axios from 'axios';
-import FormStyles from './styles/FormStyles';
+import FormStyles from '../styles/FormStyles';
 import Router from 'next/router';
+
+import City from './City';
+import Phone from './Phone';
+import Name from './Name';
+import Description from './Description';
+import Url from './Url';
+import Address from './Address';
+import Hours from './Hours';
 
 class AddForm extends React.Component {
 
@@ -16,21 +24,6 @@ class AddForm extends React.Component {
         lat:  this.props.item && this.props.item.lat || '',
         errors: {}
     }
-
-    handleScheduleChange = (e) => {
-        const value = e.target.value;
-        const name = e.target.name;
-        const index = e.target.attributes[0].value;
-
-            if ( index === '0') {
-                this.setState({ schedule: {...this.state.schedule, [`${name}`]: {...this.state.schedule[`${name}`], open: value }}})
-            }
-            if ( index === '1') {
-                this.setState({ schedule: {...this.state.schedule, [`${name}`]: {...this.state.schedule[`${name}`], close: value }}})
-            }    
-
-    }
-
 
     validateHours = () => {
         let days = this.state.schedule;
@@ -93,7 +86,7 @@ class AddForm extends React.Component {
                 try {
                     console.log('all correct!! --- UPDATING!')
                     await axios.post(`/api/items/update/${this.props.id}`, item).then(res => {
-                        console.log(res)
+                        console.log(res);
                     }).catch((err) => {
                         console.log(err)
                     })
@@ -103,7 +96,7 @@ class AddForm extends React.Component {
                     Router.push({
                         pathname: '/item', query: {id: id}
                     },  '/update/'+id);
-                    
+
                 } catch(err) {
                     console.log(err)
                 }
@@ -121,15 +114,9 @@ class AddForm extends React.Component {
         }
     }
 
-    handleChange = (e) => {   
-        const name = e.target.name;
-        const value = e.target.value;
 
-        this.setState({ [name]: value })
-    }
-
-    handleAddressChange = (e) => {
-        const address = e.target.value
+    handleAddressChange = (value) => {
+        const address = value
         const dropdown = new google.maps.places.Autocomplete(document.getElementById('autocomplete'))    
         dropdown.addListener('place_changed', () => {
             const place = dropdown.getPlace();
@@ -143,12 +130,22 @@ class AddForm extends React.Component {
     }
 
 
+    handleChange = (name, value) => {  
+        this.setState({ [name]: value })
+     }
+
+     handleScheduleChange = (value, name, index) => {
+            if ( index === '0') {
+                this.setState({ schedule: {...this.state.schedule, [`${name}`]: {...this.state.schedule[`${name}`], open: value }}})
+            }
+            if ( index === '1') {
+                this.setState({ schedule: {...this.state.schedule, [`${name}`]: {...this.state.schedule[`${name}`], close: value }}})
+            }    
+    }
 
 
     render(){
 
-
-        //const weekDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
         const weekDays = [
             ['monday', 'Понедельник'], 
             ['tuesday', 'Вторник'], 
@@ -160,81 +157,37 @@ class AddForm extends React.Component {
         ]
 
         return (
-            <React.Fragment>
             <FormStyles onSubmit={this.handleSubmit}>
                 <fieldset>
-                    <label> Город
-                            <select  value={this.state.city}  type='text' placeholder='Город' name='city' onChange={this.handleChange} required>
-                            <option value=""></option>
-                            <option value="moscow">Москва</option>
-                            <option value="saint-petersburg">Санкт-Петербург</option>
-                            </select>
-                    </label>
+                    <City name={this.state.city} handleChange={this.handleChange}/>
+                    <Phone name={this.state.phone} handleChange={this.handleChange}/>
+                    {this.state.errors.phone ? <span className="form__error">{this.state.errors.phone}</span> : ''}
+                    <Name name={this.state.name} handleChange={this.handleChange}/>
+                    <Description name={this.state.description} handleChange={this.handleChange}/>
+                    <Url name={this.state.url} handleChange={this.handleChange}/>
+                    <Address name={this.state.address} handleChange={this.handleAddressChange}/>
 
-                    <label> Телефон
-                        <input  value={this.state.phone}  type='text' placeholder='7-985-555-2233' name='phone' onChange={this.handleChange} required />
-                        {this.state.errors.phone ? <span className="form__error">{this.state.errors.phone}</span> : ''}
-                    </label>
-
-
-                    <label> Name
-                            <input  value={this.state.name}  type="text" placeholder='Name' name='name' onChange={this.handleChange} />
-                    </label>
-
-                    <label> Description
-                            <textarea  value={this.state.description}  type="text" placeholder='Description' name='description' onChange={this.handleChange} />
-                    </label>
-            
-
-                    <label> Website
-                            <input  value={this.state.url}  type='url' placeholder="http://hello.ru" name="url" onChange={this.handleChange} />
-                    </label>
-                   
-
-                    <label>
-                        Address
-                        <input 
-                            id="autocomplete"
-                            placeholder="Введите адрес" 
-                            name='address' 
-                            onChange={this.handleAddressChange}
-                            value={this.state.address} required/>
-                    </label>
-                        
                     <fieldset>
                         <label>Часы Работы</label>
                         <div className="workHours">
-                            {weekDays.map((res, i) => {
+                        { weekDays.map((res, i) => {
+                            const open = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].open : '';
+                            const close = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].close : '';
 
-                               const open = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].open : ''
-                               const close = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].close : ''
-                               
-                                return <label key={i}> 
-                                {res[1]}
-                                <input 
-                                    index={0}
-                                    type="text" 
-                                    name={res[0]}
-                                    placeholder='08:00'
-                                    value={open || ''}
-                                    onChange={this.handleScheduleChange} required />
-                                <input 
-                                    index={1}
-                                    type="text" 
-                                    name={res[0]}
-                                    placeholder='20:00'
-                                    value={close || ''}
-                                    onChange={this.handleScheduleChange} required />
-                                    {this.state.errors[`${res[0]}`] ? <span className="form__error">{this.state.errors[`${res[0]}`]}</span> : ''}
-                                </label>
-                            })}    
+                            return <Hours handleChange={this.handleScheduleChange}
+                                                    errors={this.state.errors}
+                                                    key={i} 
+                                                    day={res[1]} 
+                                                    name={res[0]} 
+                                                    open={open} 
+                                                    close={close}/>
+                                        }) }
                         </div>
                     </fieldset>
 
                     <button type="submit">Add</button>
                 </fieldset>
             </FormStyles>
-            </React.Fragment>
         )
     }
 }

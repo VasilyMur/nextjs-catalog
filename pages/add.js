@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import AddForm from '../components/AddForm'
+import AddForm from '../components/Form/AddForm'
 
 
 

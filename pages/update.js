@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import AddForm from '../components/AddForm';
+import AddForm from '../components/Form/AddForm';
 
 
 
