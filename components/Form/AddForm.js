@@ -9,6 +9,7 @@ import Description from './Description';
 import Url from './Url';
 import Address from './Address';
 import Hours from './Hours';
+import Photo from './Photo';
 
 class AddForm extends React.Component {
 
@@ -22,7 +23,30 @@ class AddForm extends React.Component {
         address: this.props.item && this.props.item.address || '',
         lng: this.props.item && this.props.item.lng || '',
         lat:  this.props.item && this.props.item.lat || '',
-        errors: {}
+        errors: {},
+        image: this.props.item && this.props.item.image || '',
+        largeImage: this.props.item && this.props.item.largeImage || '',
+        
+    }
+
+    photoUpload = async (value) => {
+        console.log('uploading')
+        const files = value;
+        const data = new FormData();
+        data.append('file', files[0]);
+        data.append('upload_preset', 'adltmsc');
+
+        const res = await fetch('https://api.cloudinary.com/v1_1/dlmeqtsfq/image/upload', {
+            method: 'POST',
+            body: data
+        });
+
+        const file = await res.json();
+        console.log(file)
+        this.setState({ 
+            image: file.secure_url,
+            largeImage: file.eager[0].secure_url
+        });
     }
 
     validateHours = () => {
@@ -73,12 +97,15 @@ class AddForm extends React.Component {
             location: {
                 coordinates: [this.state.lng, this.state.lat],
                 address: this.state.address
-            }
+            },
+            image: this.state.image,
+            largeImage: this.state.largeImage,
         }
 
         console.log(item)
 
-        if (  !this.validatePhone() || !this.validateHours() ) {
+
+        if (  !this.validatePhone() || !this.validateHours() || !this.state.image ) {
             console.log('submit error')
  
         } else {
@@ -90,7 +117,8 @@ class AddForm extends React.Component {
                     }).catch((err) => {
                         console.log(err)
                     })
-                    this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '' });
+                    this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '', image: '',
+                    largeImage: '' });
     
                     const id = this.props.item.slug;
                     Router.push({
@@ -109,7 +137,8 @@ class AddForm extends React.Component {
                 }).catch((err) => {
                     console.log(err)
                 })
-                this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '' });
+                this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '', image: '',
+                largeImage: '' });
             }
         }
     }
@@ -166,6 +195,8 @@ class AddForm extends React.Component {
                     <Description name={this.state.description} handleChange={this.handleChange}/>
                     <Url name={this.state.url} handleChange={this.handleChange}/>
                     <Address name={this.state.address} handleChange={this.handleAddressChange}/>
+                    <Photo handleChange={this.photoUpload}/>
+                    {this.state.image && <img src={this.state.image} alt="Upload Preview" />}
 
                     <fieldset>
                         <label>Часы Работы</label>

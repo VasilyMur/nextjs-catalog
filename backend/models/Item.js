@@ -15,6 +15,8 @@ const itemSchema = new mongoose.Schema({
     required: 'Введите название',
   },
   slug: String,
+  image: String,
+  largeImage: String,
   description: {
     type: String,
     trim: true,

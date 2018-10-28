@@ -18,7 +18,7 @@ class Add extends React.Component {
 }
 
 const Container = styled.div`
-  max-width: 500px;
+  max-width: 555px;
   margin: 0 auto;
 `;
 

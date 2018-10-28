@@ -46,6 +46,8 @@ Update.getInitialProps = async function(context) {
             sunday: res.data.schedule.sunday,
         },
         slug: res.data.slug,
+        image: res.data.image,
+        largeImage: res.data.largeImage
     }
   
    return { item };

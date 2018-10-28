@@ -8,6 +8,7 @@ const itemsController = require('../controllers/itemsController')
 
 router.get('/all', itemsController.getItems);
 router.get('/single/:id', itemsController.getSingleItem);
+
 router.post('/create', itemsController.createItem);
 
 router.get('/edit/:id', itemsController.editItem);

@@ -3,6 +3,7 @@ require('../models/Item')
 const Item = mongoose.model('Item')
 mongoose.Promise = global.Promise;
 
+
 exports.getItems = async (req, res) => {
     try {
         const itemsPromise = Item
@@ -39,6 +40,7 @@ exports.getSingleItem = async (req, res, next) => {
         return res.status(500).json(err);
     }
 }
+
 
 exports.createItem = async (req, res) => {
     try {
