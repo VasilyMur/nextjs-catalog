@@ -26,6 +26,7 @@ class AddForm extends React.Component {
         errors: {},
         image: this.props.item && this.props.item.image || '',
         largeImage: this.props.item && this.props.item.largeImage || '',
+        roundTheClock: false
         
     }
 
@@ -164,12 +165,34 @@ class AddForm extends React.Component {
      }
 
      handleScheduleChange = (value, name, index) => {
-            if ( index === '0') {
-                this.setState({ schedule: {...this.state.schedule, [`${name}`]: {...this.state.schedule[`${name}`], open: value }}})
-            }
-            if ( index === '1') {
-                this.setState({ schedule: {...this.state.schedule, [`${name}`]: {...this.state.schedule[`${name}`], close: value }}})
-            }    
+        if ( index === '0') {
+            this.setState({ schedule: {...this.state.schedule, [`${name}`]: {...this.state.schedule[`${name}`], open: value }}})
+        }
+        if ( index === '1') {
+            this.setState({ schedule: {...this.state.schedule, [`${name}`]: {...this.state.schedule[`${name}`], close: value }}})
+        } 
+    }
+
+    handleCheck = () => {
+        const roundTheClock = this.state.roundTheClock;
+        this.setState({ roundTheClock: !roundTheClock });
+
+        if (!this.state.roundTheClock) {
+            this.setState({
+                schedule: {
+                    monday: {open: '00:00', close: '24:00'},
+                    tuesday: {open: '00:00', close: '24:00'},
+                    wednesday: {open: '00:00', close: '24:00'},
+                    thursday: {open: '00:00', close: '24:00'},
+                    friday: {open: '00:00', close: '24:00'},
+                    saturday: {open: '00:00', close: '24:00'},
+                    sunday: {open: '00:00', close: '24:00'},
+                }
+            })
+        } else {
+            this.setState({ schedule: {}})
+        }
+
     }
 
 
@@ -215,6 +238,11 @@ class AddForm extends React.Component {
                                         }) }
                         </div>
                     </fieldset>
+
+                    <label className="roundTheClock">
+                        Круглосуточно
+                        <input type='checkbox' name='roundTheClock' onChange={this.handleCheck}/>
+                    </label>
 
                     <button type="submit">Add</button>
                 </fieldset>

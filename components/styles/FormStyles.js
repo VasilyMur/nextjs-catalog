@@ -60,10 +60,15 @@ const FormStyles = styled.form`
       content: '';
       display: block;
       background-image: linear-gradient(to right, #ff3019 0%, #e2b04a 50%, #ff3019 100%);
+      margin-bottom: 5px;
     }
   }
   .form__error {
       color: ${props => props.theme.red}
+  }
+  .roundTheClock {
+    display: flex;
+    max-width: 170px;
   }
 `
 

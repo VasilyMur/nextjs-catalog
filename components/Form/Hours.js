@@ -1,4 +1,7 @@
+
+
 class Hours extends React.Component {
+
 
     handleChange = (e) => {   
         const value = e.target.value;
@@ -9,6 +12,7 @@ class Hours extends React.Component {
 
     render() {
         const { name, day, open, close, errors } = this.props;
+
         return (
                 <label > 
                     {day}
