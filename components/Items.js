@@ -7,6 +7,9 @@ const ItemsList = styled.div`
   flex-direction: column;
   max-width: ${props => props.theme.maxWidthFrontAll};
   margin: 0 auto;
+    &:first-child {
+        border-top: 1px solid ${props => props.theme.offWhite};
+    }
 `;
 
 class Items extends React.Component {

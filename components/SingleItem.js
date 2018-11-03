@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Head from 'next/head';
+import MapContainer from './GoogleMap/MapContainer';
 
 const SingleItemStyles = styled.div`
   max-width: 1200px;
   margin: 2rem auto;
   box-shadow: ${props => props.theme.bs};
   display: grid;
-  grid-auto-columns: 1fr;
-  grid-auto-flow: column;
+  grid-template-rows: auto;
   min-height: 800px;
   img {
     width: 100%;
@@ -23,22 +23,32 @@ const SingleItemStyles = styled.div`
 
 
 class SingleItem extends Component {
+
   render() {
+
+    const { name, largeImage, title, location, phone, url, description } = this.props.item;
+    const [ lng, lat ] = location.coordinates;
+
+    const address = location.address;
+
     return (
-        <SingleItemStyles>
-            <Head>
-              <title>Клуб | {this.props.item.name}</title>
-            </Head>
-            {/* <img src={item.largeImage} alt={item.title} /> */}
-            <div className="details">
-            <h1>{this.props.item.name}</h1>
-            <p>{this.props.item.location.address}</p>
-            <p>{this.props.item.phone}</p>
-            <p>{this.props.item.url}</p>
-            <p>{this.props.item.description}</p>
-            {/* <p>{this.props.item.schedule}</p> */}
-            </div>
-        </SingleItemStyles>
+      <React.Fragment>
+          <SingleItemStyles>
+              <Head>
+                <title>Клуб | {name}</title>
+              </Head>
+              <img src={largeImage} alt={title} />
+              <div className="details">
+                <h1>{name}</h1>
+                <p>{address}</p>
+                <p>{phone}</p>
+                <p>{url}</p>
+                <p>{description}</p>
+                {/* <p>{this.props.item.schedule}</p> */}
+              </div>
+          </SingleItemStyles>
+          <MapContainer marker={{ lat, lng }} club={{ name, address }}/>
+        </React.Fragment>
         );
   }
 }
