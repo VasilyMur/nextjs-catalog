@@ -1,12 +1,13 @@
 import axios from 'axios';
 import Items from '../components/Items';
+import styled from 'styled-components';
 
 
 const Index = (props) => {
         return (
-            <React.Fragment>
+            <Inner>
                 <Items items={props.items}/>
-            </React.Fragment>
+            </Inner>
         )
 }
 
@@ -21,5 +22,10 @@ Index.getInitialProps = async function() {
     }  
 } 
 
+const Inner = styled.div`
+max-width: ${props => props.theme.maxWidth};
+margin: 0 auto;
+padding: 2rem;
+`;
 
 export default Index

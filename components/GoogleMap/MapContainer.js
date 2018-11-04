@@ -6,10 +6,10 @@ class MapContainer extends React.Component {
 
 		return (
 			<Map
-                marker={this.props.marker}
-                club={this.props.club}
-                containerElement={ <div style={{ height: `500px`, width: '100%' }} /> }
-                mapElement={ <div style={{ height: `100%` }} /> }
+        marker={this.props.marker}
+        club={this.props.club}
+        containerElement={ <div style={{ height: `400px`, width: '100%' }} /> }
+        mapElement={ <div style={{ height: `100%` }} /> }
 			/>
 		);
     }

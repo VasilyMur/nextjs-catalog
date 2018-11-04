@@ -8,12 +8,12 @@ class Update extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <Inner>
                 <h1>Update Item</h1>
                 <Container>
                     <AddForm item={this.props.item} id={this.props.query.id}/>
                 </Container>
-            </React.Fragment>
+            </Inner>
         )
     }
 }
@@ -21,6 +21,12 @@ class Update extends React.Component {
 const Container = styled.div`
   max-width: 500px;
   margin: 0 auto;
+`;
+
+const Inner = styled.div`
+max-width: ${props => props.theme.maxWidth};
+margin: 0 auto;
+padding: 2rem;
 `;
 
 Update.getInitialProps = async function(context) {

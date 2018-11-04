@@ -5,7 +5,7 @@ import Item from './Item';
 const ItemsList = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: ${props => props.theme.maxWidthFrontAll};
+  max-width: ${props => props.theme.maxWidthFront};
   margin: 0 auto;
     &:first-child {
         border-top: 1px solid ${props => props.theme.offWhite};

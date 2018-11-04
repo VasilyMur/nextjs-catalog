@@ -26,7 +26,7 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAS0MMdoCXhd9CSJr3dSJXyhlJxBX3Xkts&libraries=places&language=ru-RU`} />
+          <script src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAS0MMdoCXhd9CSJr3dSJXyhlJxBX3Xkts&libraries=places&language=en`} />
         </body>
       </html>
     );

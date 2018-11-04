@@ -11,7 +11,8 @@ const theme = {
     lightgrey: '#E1E1E1',
     offWhite: '#EDEDED',
     maxWidth: '1000px',
-    maxWidthFrontAll: '600px',
+    maxWidthSingle: '840px',
+    maxWidthFront: '600px',
     bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
   };
   
@@ -20,10 +21,7 @@ const theme = {
     color: ${props => props.theme.black};
   `;
   
-  const Inner = styled.div`
-    max-width: ${props => props.theme.maxWidth};
-    margin: 0 auto;
-    padding: 2rem;
+  const Content = styled.div`
   `;
 
 injectGlobal`
@@ -63,7 +61,7 @@ class Page extends React.Component {
                 <StyledPage>
                     <Meta />
                     <Header />
-                    <Inner>{this.props.children}</Inner>
+                    <Content>{this.props.children}</Content>
                 </StyledPage>
          </ThemeProvider>
         )

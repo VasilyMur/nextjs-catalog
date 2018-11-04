@@ -120,11 +120,11 @@ class AddForm extends React.Component {
                     })
                     this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '', image: '',
                     largeImage: '' });
-    
+     
                     const id = this.props.item.slug;
                     Router.push({
                         pathname: '/item', query: {id: id}
-                    },  '/update/'+id);
+                    },  '/items/'+id);
 
                 } catch(err) {
                     console.log(err)
@@ -218,7 +218,7 @@ class AddForm extends React.Component {
                     <Description name={this.state.description} handleChange={this.handleChange}/>
                     <Url name={this.state.url} handleChange={this.handleChange}/>
                     <Address name={this.state.address} handleChange={this.handleAddressChange}/>
-                    <Photo handleChange={this.photoUpload}/>
+                    <Photo photo={this.state.image} handleChange={this.photoUpload}/>
                     {this.state.image && <img src={this.state.image} alt="Upload Preview" />}
 
                     <fieldset>

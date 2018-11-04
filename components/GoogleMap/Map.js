@@ -9,6 +9,7 @@ const { lat, lng } = props.marker;
     return (
         <GoogleMap
           defaultZoom={15}
+          defaultOptions={{ zoomControlOptions: { position: google.maps.ControlPosition.TOP_LEFT } }}
           center={ { lat, lng } }
           >
         <LocationMarker marker={props.marker} club={props.club}/>
