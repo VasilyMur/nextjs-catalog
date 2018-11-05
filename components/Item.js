@@ -8,15 +8,15 @@ class Item extends React.Component {
 
         return (
             <ItemStyles>
-                <ImgContainer>
+                <ImgContainer> 
                     {item.image && <img src={item.image} alt={item.name} />}
                     <EditLink><Link as={`/update/${item._id}`} href={ {pathname: '/update', query: {id: item._id}} }><a>Edit ✏️</a></Link></EditLink>
                 </ImgContainer>
                 <DescriptionContainer>
-                    <h2><Link as={`/items/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>{item.name}</a></Link></h2>
+                    <h2><Link as={`/item/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>{item.name}</a></Link></h2>
                     <address>{item.location.address}</address>
                     <Hours><span>Tuesday</span>: 10:00 - 22:00 </Hours>  
-                    <Description><p>{item.description.split(' ').slice(0, 27).join(' ')}... <Link as={`/items/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>read more</a></Link></p></Description>  
+                    <Description><p>{item.description.split(' ').slice(0, 27).join(' ')}... <Link as={`/item/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>read more</a></Link></p></Description>  
                 </DescriptionContainer>
             </ItemStyles>
         )

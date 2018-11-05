@@ -3,7 +3,7 @@ import AllItems from '../components/AllItems';
 import styled from 'styled-components';
 
 
-const Index = (props) => {
+const Items = (props) => {
         return (
             <Inner>
                 <AllItems {...props}/>
@@ -12,10 +12,12 @@ const Index = (props) => {
 }
 
 
-Index.getInitialProps = async function() {
+
+Items.getInitialProps = async function(context) {
     try {
         // CHANGE!!!!! to REAL PATH!! WHY RELATIVE нельзя???
-        const res = await axios.get('http://localhost:3000/api/items/all')
+        const { page } = context.query;
+        const res = await axios.get(`http://localhost:3000/api/items/all/${page}`)
 
         return {
             items: res.data.items,
@@ -37,4 +39,4 @@ display: grid;
 justify-content: center;
 `;
 
-export default Index
+export default Items;

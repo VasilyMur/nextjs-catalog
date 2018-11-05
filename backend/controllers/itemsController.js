@@ -6,15 +6,25 @@ mongoose.Promise = global.Promise;
 
 exports.getItems = async (req, res) => {
     try {
+        const page = req.params.page || 1;
+        const limit = 5;
+        const skip = (page * limit) - limit;
+
         const itemsPromise = Item
         .find()
+        .skip(skip)
+        .limit(limit)
         .sort({ created: 'desc' })
         const countPromise = Item.countDocuments();
 
         const [items, count] = await Promise.all([itemsPromise, countPromise]);
+        const pages = Math.ceil(count / limit);
+
         const body = {
             items,
-            count
+            count,
+            pages,
+            page
         }
         res.status(201).send(body)
     } catch(err) {
