@@ -11,20 +11,36 @@ const Nav = () => (
             </li>
 
             <li>
-                <Link href="/tours">
-                    <a>Tours</a>
+                <Link
+                    prefetch
+                    as={`/city/new-york`}
+                    href={{
+                    pathname: '/city',
+                    query: { city: 'new-york' },
+                    }}>
+                    <a>
+                        New York
+                    </a>
                 </Link>
             </li>
 
             <li>
-                <Link href="/guides">
-                    <a>Guides</a>
+            <Link
+                    prefetch
+                    as={`/city/moscow`}
+                    href={{
+                    pathname: '/city',
+                    query: { city: 'moscow' },
+                    }}>
+                    <a>
+                        Moscow
+                    </a>
                 </Link>
             </li>
 
             <li>
                 <Link href="/places">
-                    <a>Places</a>
+                    <a>London</a>
                 </Link>
             </li>
 

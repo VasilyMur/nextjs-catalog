@@ -33,6 +33,18 @@ nextApp.prepare()
     nextApp.render(req, res, actualPage, queryParams);
   });
 
+  server.get('/city/:city', (req, res) => {
+    const actualPage = '/city';
+    const queryParams = { city: req.params.city };
+    nextApp.render(req, res, actualPage, queryParams);
+  });
+
+  server.get('/city/:city/page/:page', (req, res) => {
+    const actualPage = '/cities';
+    const queryParams = { city: req.params.city, page: req.params.page };
+    nextApp.render(req, res, actualPage, queryParams);
+  });
+
   server.get('/items/page/:page', (req, res) => {
     const actualPage = '/items';
     const queryParams = { page: req.params.page };

@@ -9,6 +9,9 @@ const itemsController = require('../controllers/itemsController')
 router.get('/all', itemsController.getItems);
 router.get('/all/:page', itemsController.getItems);
 
+router.get('/city/:city', itemsController.getItemsByCity);
+router.get('/city/:city/:page', itemsController.getItemsByCity);
+
 router.get('/single/:id', itemsController.getSingleItem);
 
 router.post('/create', itemsController.createItem);

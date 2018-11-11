@@ -6,7 +6,7 @@ mongoose.Promise = global.Promise;
 
 exports.getItems = async (req, res) => {
     try {
-        const page = req.params.page || 1;
+        const page = parseInt(req.params.page) || 1;
         const limit = 5;
         const skip = (page * limit) - limit;
 
@@ -91,4 +91,71 @@ exports.updateItem = async (req, res) => {
         return res.status(500).json(err);
     }
 
+}
+
+exports.getItemsByCity = async (req, res) => {
+    try {
+
+        const page = parseInt(req.params.page) || 1;
+        const limit = 5;
+        const skip = (page * limit) - limit;
+
+
+        const city = req.params.city;
+        const cityQuery = city || { $exists: true };
+        
+        const cityPromise = Item
+            .find( {city: cityQuery })
+            .skip(skip)
+            .limit(limit)
+            .sort({ created: 'desc' });
+
+        const countPromise = Item.countDocuments( {city: cityQuery } );
+
+        const [ items, count ] = await Promise.all([ cityPromise, countPromise ]);
+        const pages = Math.ceil(count / limit);
+
+        const body = {
+            items,
+            count,
+            pages,
+            page
+        }
+
+        res.status(201).send(body)
+
+
+
+// console.log(req.params)
+
+        // const page = parseInt(req.params.page) || 1;
+        // const limit = 5;
+        // const skip = (page * limit) - limit;
+
+        // const itemsPromise = Item
+        // .find( { city: 'new-york' } )
+        // .skip(skip)
+        // .limit(limit)
+        // .sort({ created: 'desc' })
+
+        // const countPromise = Item.countDocuments( {city: 'new-york' } );
+
+        // const [items, count] = await Promise.all([itemsPromise, countPromise]);
+        // const pages = Math.ceil(count / limit);
+
+        // const body = {
+        //     items,
+        //     count,
+        //     pages,
+        //     page
+
+        // }
+
+        // res.status(201).send(body)
+
+
+
+    } catch(err) {
+        console.log(err)
+    }
 }

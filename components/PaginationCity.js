@@ -3,21 +3,21 @@ import PaginationStyles from './styles/PaginationStyles';
 import Link from 'next/link';
 
 
-class Pagination extends React.Component {
+class PaginationCity extends React.Component {
 
     render() {
   
-        const {  page, pages, count } = this.props;
+        const {  page, pages, count, city } = this.props;
 
         return (
             <PaginationStyles>                
 
                 <Link
                     prefetch
-                    as={`/items/page/${page - 1}`}
+                    as={`/city/${city}/page/${page - 1}`}
                     href={{
-                    pathname: '/items',
-                    query: { page: page - 1 },
+                    pathname: '/cities',
+                    query: { page: page - 1, city: city },
                     }}>
                     <a className="prev" aria-disabled={page <= 1}>
                     ← Prev
@@ -27,10 +27,10 @@ class Pagination extends React.Component {
                 <p>{count} Items Total</p>
                 <Link
                     prefetch
-                    as={`/items/page/${page + 1}`}
+                    as={`/city/${city}/page/${page + 1}`}
                     href={{
-                    pathname: '/items',
-                    query: { page: page + 1 },
+                    pathname: '/cities',
+                    query: { page: page + 1, city: city },
                     }}>
                     <a className="next" aria-disabled={page >= pages}>
                         Next →
@@ -43,4 +43,4 @@ class Pagination extends React.Component {
 
 
 
-export default Pagination;
+export default PaginationCity;

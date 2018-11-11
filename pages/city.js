@@ -1,9 +1,9 @@
 import axios from 'axios';
-import AllItems from '../components/AllItems';
+import AllItemsCity from '../components/AllItemsCity';
 import styled from 'styled-components';
 import Head from 'next/head';
 
-const Items = (props) => {
+const City = (props) => {
         return (
             <Inner>
                 <Head>
@@ -11,18 +11,18 @@ const Items = (props) => {
                         Sick Fits! — Page {props.page} of {props.pages}
                     </title>
                 </Head>
-                <AllItems {...props}/>
+                <AllItemsCity {...props}/>
             </Inner>
         )
 }
 
 
 
-Items.getInitialProps = async function(context) {
+City.getInitialProps = async function(context) {
     try {
         // CHANGE!!!!! to REAL PATH!! WHY RELATIVE нельзя???
-        const { page } = context.query;
-        const res = await axios.get(`http://localhost:3000/api/items/all/${page}`)
+        const { city } = context.query;
+        const res = await axios.get(`http://localhost:3000/api/items/city/${city}`)
 
         return {
             items: res.data.items,
@@ -44,4 +44,4 @@ display: grid;
 justify-content: center;
 `;
 
-export default Items;
+export default City;

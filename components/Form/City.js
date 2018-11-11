@@ -12,8 +12,8 @@ class City extends React.Component {
                 Город
                 <select  value={this.props.name}  type='text' placeholder='Город' name='city' onChange={this.handleChange} required>
                 <option value=""></option>
-                <option value="moscow">Москва</option>
-                <option value="saint-petersburg">Санкт-Петербург</option>
+                <option value="moscow">Moscow</option>
+                <option value="new-york">New York</option>
                 </select>
             </label>
         )

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+ 
 const PaginationStyles = styled.div`
   text-align: center;
   display: inline-grid;

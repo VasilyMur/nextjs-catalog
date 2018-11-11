@@ -15,6 +15,7 @@ class Item extends React.Component {
                 <DescriptionContainer>
                     <h2><Link as={`/item/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>{item.name}</a></Link></h2>
                     <address>{item.location.address}</address>
+                    <City>{item.city}</City>
                     <Hours><span>Tuesday</span>: 10:00 - 22:00 </Hours>  
                     <Description><p>{item.description.split(' ').slice(0, 27).join(' ')}... <Link as={`/item/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>read more</a></Link></p></Description>  
                 </DescriptionContainer>
@@ -33,6 +34,9 @@ const DescriptionContainer = styled.div`
 `;
 
 const Hours = styled.div`
+    display: flex;
+`;
+const City = styled.div`
     display: flex;
 `;
 
