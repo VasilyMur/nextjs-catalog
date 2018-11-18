@@ -2,16 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import Item from './Item';
 import PaginationCity from './PaginationCity';
+import StaticMap from './StaticMap';
 
 
 class AllItemsCity extends React.Component {
 
+
     render() {
-        const { items, page, pages, count, query } = this.props;
+        const { items, page, pages, count, query, cityLatLng } = this.props;
+        const { city } = query;
+        const removeHyphen = city.replace(/-/g, ' ');
+        const cityCap = removeHyphen.split(' ');
+        const cityHeader = cityCap.map(res => {
+            return res.charAt(0).toUpperCase() + res.slice(1);
+        }).join(' ');
 
         return (
             <React.Fragment>
-                <h1>All Items</h1>
+                <h1>{cityHeader} Strip Clubs</h1>
+                <StaticMap cityLatLng={cityLatLng} city={city}/>
                     <ItemsList>{items.map((item, i) => {
                         return <Item item={item} key={i}/>
                     })}</ItemsList>

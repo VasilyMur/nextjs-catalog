@@ -1,4 +1,5 @@
 import { InfoWindow } from 'react-google-maps';
+import Link from 'next/link';
 
 
 class  LocationInfoWindow extends React.Component {
@@ -9,11 +10,19 @@ class  LocationInfoWindow extends React.Component {
 
     render() {
 
-        const { name, address } = this.props.club;
+        const { name, address, slug } = this.props.data;
 
         return (
             <InfoWindow onCloseClick={this.toggle}>
-                <p>{name}<br></br>{address}</p>
+                <Link
+                    href={{
+                        pathname: `/item/${slug}`,
+                    }}> 
+                    <a>
+                        {name}<br></br>{address}
+                    </a> 
+                    </Link>
+                        
             </InfoWindow>
      );
   }

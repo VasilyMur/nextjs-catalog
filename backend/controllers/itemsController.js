@@ -123,38 +123,31 @@ exports.getItemsByCity = async (req, res) => {
         }
 
         res.status(201).send(body)
+    } catch(err) {
+        console.log(err)
+    }
+};
 
 
+exports.getAllItemsCity = async (req, res) => {
+    try {
 
-// console.log(req.params)
+        const city = req.params.city;
+        const cityQuery = city || { $exists: true };
+        
+        const cityPromise = Item
+            .find( {city: cityQuery });
 
-        // const page = parseInt(req.params.page) || 1;
-        // const limit = 5;
-        // const skip = (page * limit) - limit;
+        const countPromise = Item.countDocuments( {city: cityQuery } );
 
-        // const itemsPromise = Item
-        // .find( { city: 'new-york' } )
-        // .skip(skip)
-        // .limit(limit)
-        // .sort({ created: 'desc' })
+        const [ items, count ] = await Promise.all([ cityPromise, countPromise ]);
 
-        // const countPromise = Item.countDocuments( {city: 'new-york' } );
+        const body = {
+            items,
+            count,
+        }
 
-        // const [items, count] = await Promise.all([itemsPromise, countPromise]);
-        // const pages = Math.ceil(count / limit);
-
-        // const body = {
-        //     items,
-        //     count,
-        //     pages,
-        //     page
-
-        // }
-
-        // res.status(201).send(body)
-
-
-
+        res.status(201).send(body)
     } catch(err) {
         console.log(err)
     }

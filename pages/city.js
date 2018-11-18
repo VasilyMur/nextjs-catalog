@@ -22,13 +22,16 @@ City.getInitialProps = async function(context) {
     try {
         // CHANGE!!!!! to REAL PATH!! WHY RELATIVE нельзя???
         const { city } = context.query;
-        const res = await axios.get(`http://localhost:3000/api/items/city/${city}`)
+        const res = await axios.get(`http://localhost:3000/api/items/city/${city}`);
+        const cityCoordinates = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${city}&key=AIzaSyBzEHOCWEy8yFaAG7To5pOzKjPlzF3jED4`);
+        const { lat, lng } = cityCoordinates.data.results[0].geometry.location;
 
         return {
             items: res.data.items,
             count: res.data.count,
             pages: res.data.pages,
             page: res.data.page,
+            cityLatLng: {lat, lng}
         }  
     } catch(err) {
         console.log(err)

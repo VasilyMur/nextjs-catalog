@@ -19,16 +19,26 @@ class SingleItem extends Component {
 
   render() {
 
-    const { name, largeImage, title, location, phone, url, description, schedule } = this.props.item;
+    const { name, largeImage, title, location, phone, url, description, schedule, slug, city } = this.props.item;
     const [ lng, lat ] = location.coordinates;
     const address = location.address;
 
     const locationData = { address, phone, url }
 
+    const marker = [
+      {
+        position: { lat, lng },
+        name,
+        address: location.address,
+        slug,
+        city
+      }
+    ]
+ 
     return (
       <React.Fragment>
         <InnerSingleTop>
-            <MapContainer marker={{ lat, lng }} club={{ name, address }}/>
+            <MapContainer mapCenter={{ lat, lng }} markers={marker} single={true}/>
             <SingleTitle>{name}</SingleTitle>
             <Head>
               <title>Клуб | {name}</title>

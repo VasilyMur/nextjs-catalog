@@ -4,15 +4,18 @@ import LocationMarker from './LocationMarker';
 
 
 const Map = withGoogleMap((props) => {
-const { lat, lng } = props.marker;
 
+const markers = props.markers && props.markers.map((res, i) => {
+  return <LocationMarker key={i} markerData={res}/>
+}) 
+ 
     return (
         <GoogleMap
-          defaultZoom={15}
-          defaultOptions={{ zoomControlOptions: { position: google.maps.ControlPosition.TOP_LEFT } }}
-          center={ { lat, lng } }
+          defaultZoom={props.single ? 15 : 12}
+          defaultOptions={{ zoomControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT } }}
+          center={props.mapCenter}
           >
-        <LocationMarker marker={props.marker} club={props.club}/>
+          {markers}
         </GoogleMap>
   );
 })

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const Index = (props) => {
         return (
             <Inner>
-                <AllItems {...props}/>
+                <AllItems {...props} name='Strip Club Reviews'/>
             </Inner>
         )
 }

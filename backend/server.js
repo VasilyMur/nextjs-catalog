@@ -27,6 +27,12 @@ nextApp.prepare()
 
   server.use('/api/items/', routes);
 
+  server.get('/city/:city/map', (req, res) => {
+    const actualPage = '/map';
+    const queryParams = { city: req.params.city };
+    nextApp.render(req, res, actualPage, queryParams);
+  });
+
   server.get('/item/:id', (req, res) => {
     const actualPage = '/item';
     const queryParams = { id: req.params.id };

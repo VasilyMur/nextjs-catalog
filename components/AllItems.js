@@ -7,11 +7,11 @@ import Pagination from './Pagination';
 class AllItems extends React.Component {
 
     render() {
-        const { items, page, pages, count } = this.props;
+        const { items, page, pages, count, name } = this.props;
 
         return (
             <React.Fragment>
-                <h1>All Items</h1>
+                <h1>{name}</h1>
                     <ItemsList>{items.map((item, i) => {
                         return <Item item={item} key={i}/>
                     })}</ItemsList>

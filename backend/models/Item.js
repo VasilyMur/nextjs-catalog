@@ -14,6 +14,10 @@ const itemSchema = new mongoose.Schema({
     trim: true,
     required: 'Введите название',
   },
+  created: {
+    type: Date,
+    default: Date.now
+  },
   slug: String,
   image: String,
   largeImage: String,

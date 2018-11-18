@@ -4,7 +4,7 @@ import LocationInfoWindow from './LocationInfoWindow';
 //import Pin from '../../static/pin.png';
 
 class LocationMarker extends React.Component {
- 
+  
   state = {
     isOpen: false,
 }
@@ -15,16 +15,18 @@ toggleOpen = () => {
 }
 
 render() {
-    
+    const { markerData } = this.props;
+    const { position, ...itemData } = markerData;
+
 	return (
       <Marker       
-        onClick={this.toggleOpen}
-        position={this.props.marker}      
+        onClick={this.toggleOpen}    
+        position={position}      
        //icon={Pin}
       >
 
         { this.state.isOpen ? 
-          <LocationInfoWindow maxWidth={300} toggleOpen={this.toggleOpen} club={this.props.club}>
+          <LocationInfoWindow maxWidth={300} toggleOpen={this.toggleOpen} data={itemData}>
           </LocationInfoWindow> : null }
 
       </Marker>
