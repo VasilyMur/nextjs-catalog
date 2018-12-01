@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import Item from './Item';
 import PaginationCity from './PaginationCity';
 import StaticMap from './StaticMap';
-
+import Head from 'next/head';
 
 class AllItemsCity extends React.Component {
 
-
+   
     render() {
         const { items, page, pages, count, query, cityLatLng } = this.props;
         const { city } = query;
@@ -17,8 +17,16 @@ class AllItemsCity extends React.Component {
             return res.charAt(0).toUpperCase() + res.slice(1);
         }).join(' ');
 
+        const metaTitleMain = `${cityHeader} strip clubs - top ratings, locations and reviews`;
+        const metaTitlePaginated = `${cityHeader} clubs - page ${page} of ${pages}`;
+
         return (
             <React.Fragment>
+                 <Head>
+                    <title>
+                        { query.page === '0' ? metaTitleMain : metaTitlePaginated }
+                    </title>
+                </Head>
                 <h1>{cityHeader} Strip Clubs</h1>
                 <StaticMap cityLatLng={cityLatLng} city={city}/>
                     <ItemsList>{items.map((item, i) => {

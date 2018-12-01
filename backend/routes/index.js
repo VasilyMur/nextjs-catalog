@@ -3,15 +3,13 @@ const router = express.Router()
 const itemsController = require('../controllers/itemsController')
 
 
-
-//router.get('/add', itemsController.addItem);
-
+ 
 router.get('/all', itemsController.getItems);
 router.get('/all/:page', itemsController.getItems);
 
 router.get('/clubs/:city', itemsController.getAllItemsCity);
 
-router.get('/city/:city', itemsController.getItemsByCity);
+//router.get('/city/:city', itemsController.getItemsByCity);
 router.get('/city/:city/:page', itemsController.getItemsByCity);
 
 router.get('/single/:id', itemsController.getSingleItem);

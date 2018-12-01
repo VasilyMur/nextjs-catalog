@@ -1,22 +1,24 @@
-const express = require('express')
-const next = require('next')
+const express = require('express');
+const next = require('next');
+// import environmental variables from our variables.env file
+require('dotenv').config({ path: 'variables.env' });
+ 
+const bodyParser = require('body-parser');
+const PORT = process.env.PORT || 3000;
 
-const bodyParser = require('body-parser')
-const PORT = process.env.PORT || 3000
+const dev = process.env.NODE_ENV !== 'production';
+const nextApp = next({ dev });
+const handle = nextApp.getRequestHandler();
 
-const dev = process.env.NODE_ENV !== 'production'
-const nextApp = next({ dev })
-const handle = nextApp.getRequestHandler()
+const routes = require('./routes/index');
+const mongoose = require('mongoose');
 
-const routes = require('./routes/index')
-const mongoose = require('mongoose')
-
-mongoose.connect('mongodb://2011mckinsey:Secret2015!@ds115613.mlab.com:15613/xcursions', { useNewUrlParser: true })
+mongoose.connect(`${process.env.DATABASE}`, { useNewUrlParser: true })
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection.on('error', (err) => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
 });
-
+ 
 
 
 nextApp.prepare()
@@ -41,12 +43,12 @@ nextApp.prepare()
 
   server.get('/city/:city', (req, res) => {
     const actualPage = '/city';
-    const queryParams = { city: req.params.city };
+    const queryParams = { city: req.params.city, page: '0' };
     nextApp.render(req, res, actualPage, queryParams);
   });
-
+ 
   server.get('/city/:city/page/:page', (req, res) => {
-    const actualPage = '/cities';
+    const actualPage = '/city';
     const queryParams = { city: req.params.city, page: req.params.page };
     nextApp.render(req, res, actualPage, queryParams);
   });

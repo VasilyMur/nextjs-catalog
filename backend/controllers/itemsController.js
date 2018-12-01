@@ -100,10 +100,9 @@ exports.getItemsByCity = async (req, res) => {
         const limit = 5;
         const skip = (page * limit) - limit;
 
-
         const city = req.params.city;
         const cityQuery = city || { $exists: true };
-        
+
         const cityPromise = Item
             .find( {city: cityQuery })
             .skip(skip)
@@ -131,7 +130,7 @@ exports.getItemsByCity = async (req, res) => {
 
 exports.getAllItemsCity = async (req, res) => {
     try {
-
+ 
         const city = req.params.city;
         const cityQuery = city || { $exists: true };
         

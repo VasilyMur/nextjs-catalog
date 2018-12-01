@@ -18,7 +18,7 @@ export default class MyDocument extends Document {
     // Step 4: Pass styleTags as a prop
     return { ...page, styleTags };
   }
-
+ 
   render() {
     return (
       <html>
@@ -26,7 +26,7 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAS0MMdoCXhd9CSJr3dSJXyhlJxBX3Xkts&libraries=places&language=en`} />
+          <script src={`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places&language=en`} />
         </body>
       </html>
     );

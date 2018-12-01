@@ -29,7 +29,7 @@ class AddForm extends React.Component {
         roundTheClock: false
         
     }
-
+  
     photoUpload = async (value) => {
         console.log('uploading')
         const files = value;
@@ -37,7 +37,7 @@ class AddForm extends React.Component {
         data.append('file', files[0]);
         data.append('upload_preset', 'adltmsc');
 
-        const res = await fetch('https://api.cloudinary.com/v1_1/dlmeqtsfq/image/upload', {
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_KEY}/image/upload`, {
             method: 'POST',
             body: data
         });

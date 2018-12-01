@@ -12,11 +12,11 @@ class PaginationCity extends React.Component {
         return (
             <PaginationStyles>                
 
-                <Link
+                <Link 
                     prefetch
                     as={`/city/${city}/page/${page - 1}`}
                     href={{
-                    pathname: '/cities',
+                    pathname: '/city',
                     query: { page: page - 1, city: city },
                     }}>
                     <a className="prev" aria-disabled={page <= 1}>
@@ -29,7 +29,7 @@ class PaginationCity extends React.Component {
                     prefetch
                     as={`/city/${city}/page/${page + 1}`}
                     href={{
-                    pathname: '/cities',
+                    pathname: '/city',
                     query: { page: page + 1, city: city },
                     }}>
                     <a className="next" aria-disabled={page >= pages}>

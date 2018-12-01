@@ -31,7 +31,7 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript />
           {/* <script src={`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`} /> */}
-          <script src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAS0MMdoCXhd9CSJr3dSJXyhlJxBX3Xkts&libraries=places&language=ru-RU`} />
+          <script src={`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places&language=ru-RU`} />
         </body>
       </html>
     );

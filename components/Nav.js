@@ -16,11 +16,11 @@ const Nav = () => (
                     as={`/city/new-york`}
                     href={{
                     pathname: '/city',
-                    query: { city: 'new-york' },
+                    query: { city: 'new-york', page: 0 },
                     }}>
                     <a>
                         New York
-                    </a>
+                    </a> 
                 </Link>
             </li>
 
@@ -30,7 +30,7 @@ const Nav = () => (
                     as={`/city/moscow`}
                     href={{
                     pathname: '/city',
-                    query: { city: 'moscow' },
+                    query: { city: 'moscow', page: 0 },
                     }}>
                     <a>
                         Moscow

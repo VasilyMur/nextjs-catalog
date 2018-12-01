@@ -24,7 +24,7 @@ class SingleItem extends Component {
     const address = location.address;
 
     const locationData = { address, phone, url }
-
+ 
     const marker = [
       {
         position: { lat, lng },
@@ -74,6 +74,7 @@ class SingleItem extends Component {
         );
   }
 }
+
 
 const InnerSingle = styled.div`
 max-width: ${props => props.theme.maxWidthSingle};
