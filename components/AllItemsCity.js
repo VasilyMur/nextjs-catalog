@@ -7,16 +7,18 @@ import Head from 'next/head';
 
 class AllItemsCity extends React.Component {
 
-   
+    
     render() {
         const { items, page, pages, count, query, cityLatLng } = this.props;
+        if(!query || !items ) return null;
+
         const { city } = query;
         const removeHyphen = city.replace(/-/g, ' ');
         const cityCap = removeHyphen.split(' ');
         const cityHeader = cityCap.map(res => {
             return res.charAt(0).toUpperCase() + res.slice(1);
         }).join(' ');
-
+ 
         const metaTitleMain = `${cityHeader} strip clubs - top ratings, locations and reviews`;
         const metaTitlePaginated = `${cityHeader} clubs - page ${page} of ${pages}`;
 

@@ -38,6 +38,7 @@ const Logo = styled.h1`
 
 const StyledHeader = styled.header`
   .bar {
+    position: relative;
     border-bottom: 10px solid ${props => props.theme.black};
     display: grid;
     grid-template-columns: auto 1fr;

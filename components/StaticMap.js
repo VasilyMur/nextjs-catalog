@@ -4,6 +4,8 @@ import Link from 'next/link';
 class StaticMap extends React.Component {
     render() {
         const { cityLatLng, city } = this.props;
+        if(!cityLatLng || !city) return null;
+        
         const { lat, lng } = cityLatLng;
         
         return (

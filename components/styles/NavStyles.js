@@ -10,7 +10,7 @@ const NavStyles = styled.ul`
     list-style: none;
     display: flex;
   }
-  a,
+  .city-main,
   button {
     padding: 1rem 3rem;
     display: flex;
@@ -57,7 +57,7 @@ const NavStyles = styled.ul`
       &:after {
         width: calc(100% - 60px);
       }
-    }
+    } 
   }
   @media (max-width: 1300px) {
     border-top: 1px solid ${props => props.theme.lightgrey};

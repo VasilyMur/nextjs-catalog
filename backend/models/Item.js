@@ -127,7 +127,7 @@ const itemSchema = new mongoose.Schema({
       next();
       return;
     }
-    this.slug = slugify(this.name).toLowerCase();
+    this.slug = slugify(this.name, {remove: /[*+~.()'"!:@]/g}).toLowerCase();
   
     // find other companies that have a slug of comp, comp-1, comp-2
     const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');

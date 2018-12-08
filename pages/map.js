@@ -5,7 +5,7 @@ import MapContainer from '../components/GoogleMap/MapContainer.js';
 const Map = (props) => {
         return (
             <InnerMap>
-                <MapContainer mapCenter={props.mapCenter} markers={props.items.map(res=> {
+                <MapContainer mapCenter={props.mapCenter} markers={props.items && props.items.map(res=> {
                     return {
                         position: {lat: res.location.coordinates[1], lng: res.location.coordinates[0]},
                         name: res.name,

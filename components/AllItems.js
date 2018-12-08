@@ -8,7 +8,8 @@ class AllItems extends React.Component {
 
     render() {
         const { items, page, pages, count, name } = this.props;
-
+        if(!items) return null;
+        
         return (
             <React.Fragment>
                 <h1>{name}</h1>

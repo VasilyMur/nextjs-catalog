@@ -13,13 +13,17 @@ const SingleItemStyles = styled.div`
     max-width: 100%;
     object-fit: contain;
   }
-`;
+`; 
 
 class SingleItem extends Component {
 
   render() {
 
-    const { name, largeImage, title, location, phone, url, description, schedule, slug, city } = this.props.item;
+    const { item } = this.props;
+    if(!item) return null;
+
+    const { name, largeImage, title, location, phone, url, description, schedule, slug, city } = item;
+
     const [ lng, lat ] = location.coordinates;
     const address = location.address;
 
@@ -34,6 +38,7 @@ class SingleItem extends Component {
         city
       }
     ]
+
  
     return (
       <React.Fragment>
