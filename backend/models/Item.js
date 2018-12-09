@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const slugify = require('slugify');
-const validators = require('mongoose-validators');
+//const validators = require('mongoose-validators');
 
 const itemSchema = new mongoose.Schema({
   city: {

@@ -5,6 +5,7 @@ import AddForm from '../components/Form/AddForm'
 
 class Add extends React.Component {
 
+
     render() {
         return (
             <Inner>
@@ -16,6 +17,22 @@ class Add extends React.Component {
         )
     }
 }
+
+
+// Add.getInitialProps = async function(ctx) {
+//    console.log(ctx)
+//     // try {
+//     //   const { id } = context.query
+//     //   const res = await axios.get(`http://localhost:3000/api/items/single/${id}`)
+//     //   const item = res.data
+    
+//     //   return { item };
+  
+//     // } catch(err) {
+//     //   console.log(err)
+//     // }
+  
+//   }
 
 const Container = styled.div`
   max-width: 555px;

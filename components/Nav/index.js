@@ -2,6 +2,7 @@ import Link from 'next/link';
 import NavStyles from '../styles/NavStyles';
 import Cities from './Components/cities';
 import styled from 'styled-components';
+import axios from 'axios';
 
 class Nav extends React.Component {
 
@@ -14,6 +15,15 @@ class Nav extends React.Component {
         this.setState({ hover: !hover });
     }
 
+    handleLogOut = (e) => {
+        e.preventDefault();
+        console.log('Logging Out!!')
+        axios.get('http://localhost:3000/api/items/logout').then(res => {
+            console.log(res)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
 
     render() {
         const { hover } = this.state;
@@ -69,6 +79,10 @@ class Nav extends React.Component {
                     <Link href="/login">
                         <a className="city-main">Login</a>
                     </Link>
+                </li>
+
+                <li>
+                    <a className="city-main" onClick={this.handleLogOut}>Logout</a>
                 </li>
 
                 </NavStyles>

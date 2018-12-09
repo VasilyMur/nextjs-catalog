@@ -110,7 +110,7 @@ class AddForm extends React.Component {
             console.log('submit error')
  
         } else {
-            if (this.props.item) {
+            if (this.props.item) { 
                 try {
                     console.log('all correct!! --- UPDATING!')
                     await axios.post(`/api/items/update/${this.props.id}`, item).then(res => {
@@ -130,10 +130,10 @@ class AddForm extends React.Component {
                     console.log(err)
                 }
 
-
+ 
             } else {
                 console.log('all correct!!')
-                axios.post('/api/items/create', item).then(res => {
+                await axios.post('/api/items/create', item).then(res => {
                     console.log(res)
                 }).catch((err) => {
                     console.log(err)
