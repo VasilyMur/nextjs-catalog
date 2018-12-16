@@ -1,38 +1,39 @@
-import styled from 'styled-components'
-import AddForm from '../components/Form/AddForm'
+import styled from 'styled-components';
+import AddForm from '../components/Form/AddForm';
 
 
 
-class Add extends React.Component {
+const Add = (props) => {
 
-
-    render() {
-        return (
-            <Inner>
-                <h1>Add Item</h1>
-                <Container>
-                    <AddForm />
-                </Container>
-            </Inner>
-        )
-    }
+    return (
+        <Inner>
+        <h1>Add Item</h1>
+        <Container>
+            <AddForm {...props}/>
+        </Container>
+    </Inner>
+    )
 }
 
 
-// Add.getInitialProps = async function(ctx) {
-//    console.log(ctx)
-//     // try {
-//     //   const { id } = context.query
-//     //   const res = await axios.get(`http://localhost:3000/api/items/single/${id}`)
-//     //   const item = res.data
+
+
+Add.getInitialProps = async function({ req }) { 
     
-//     //   return { item };
-  
-//     // } catch(err) {
-//     //   console.log(err)
-//     // }
-  
-//   }
+    try {
+        const user = req && req.user ? req.user : '';
+        // CHANGE!!!!! to REAL PATH!! WHY RELATIVE нельзя???
+        // const res = await axios.get('http://localhost:3000/api/items/all')
+        return {
+            user: user
+        }
+    } catch(err) {
+        console.log(err)
+    }
+
+} 
+
+
 
 const Container = styled.div`
   max-width: 555px;
@@ -46,4 +47,4 @@ padding: 2rem;
 `;
 
 
-export default Add
+export default Add;

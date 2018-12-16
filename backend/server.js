@@ -25,7 +25,7 @@ mongoose.connection.on('error', (err) => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
 });
  
-
+ 
 
 nextApp.prepare()
 .then(() => {
@@ -34,17 +34,17 @@ nextApp.prepare()
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(expressValidator());
   // populates req.cookies with any cookies that came along with the request
-server.use(cookieParser());
-// This keeps users logged in and allows us to send flash messages
-server.use(session({
-  secret: process.env.SECRET,
-  key: process.env.KEY,
-  resave: false,
-  saveUninitialized: false,
-  store: new MongoStore({ mongooseConnection: mongoose.connection })
-}));
-server.use(passport.initialize());
-server.use(passport.session());
+  server.use(cookieParser());
+  // This keeps users logged in and allows us to send flash messages
+  server.use(session({
+    secret: process.env.SECRET,
+    key: process.env.KEY,
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+  }));
+  server.use(passport.initialize());
+  server.use(passport.session());
 
   server.use('/api/items/', routes);
 

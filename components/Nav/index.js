@@ -1,13 +1,21 @@
+import axios from 'axios';
 import Link from 'next/link';
 import NavStyles from '../styles/NavStyles';
 import Cities from './Components/cities';
-import styled from 'styled-components';
-import axios from 'axios';
 
 class Nav extends React.Component {
 
     state = {
         hover: false,
+        clientUser: ''
+    }
+
+    componentDidMount() {
+        const sessionParsed = JSON.parse(document.getElementById('session').textContent);
+        if ( sessionParsed.passport ) {
+            const { user } = sessionParsed.passport;
+            this.setState({ clientUser: user });
+        }
     }
 
     handleMouseOver = () => {
@@ -19,22 +27,21 @@ class Nav extends React.Component {
         e.preventDefault();
         console.log('Logging Out!!')
         axios.get('http://localhost:3000/api/items/logout').then(res => {
-            console.log(res)
+        window.location = '/';
+
         }).catch((err) => {
             console.log(err)
         })
     }
 
     render() {
-        const { hover } = this.state;
+        const { hover, clientUser } = this.state;
         return (
             <React.Fragment>
                 <NavStyles data-test="nav">
-                <li>
-                    <Link href="/add">
-                        <a className="city-main" >Add</a>
-                    </Link>
-                </li>
+                { clientUser ? <li>
+                    <a href="/add" className="city-main" >Add</a>
+                </li> : null }
 
                 <li>
                     <Link
@@ -69,21 +76,8 @@ class Nav extends React.Component {
                         { hover ? <Cities /> : ''}
                 </li>
 
-                <li>
-                    <Link href="/register">
-                        <a className="city-main" >Register</a>
-                    </Link>
-                </li>
+               { clientUser ?  <li> <a href="#" className="city-main" onClick={this.handleLogOut}>Log Out</a></li> : null }
                 
-                <li>
-                    <Link href="/login">
-                        <a className="city-main">Login</a>
-                    </Link>
-                </li>
-
-                <li>
-                    <a className="city-main" onClick={this.handleLogOut}>Logout</a>
-                </li>
 
                 </NavStyles>
              

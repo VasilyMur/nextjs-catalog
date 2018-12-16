@@ -9,12 +9,14 @@ const Index = (props) => {
                 <AllItems {...props} name='Strip Club Reviews'/>
             </Inner>
         )
-}
+} 
+ 
 
+Index.getInitialProps = async function({ req }) {
 
-Index.getInitialProps = async function() {
     try {
         // CHANGE!!!!! to REAL PATH!! WHY RELATIVE нельзя???
+        const user = req && req.user ? req.user : '';
         const res = await axios.get('http://localhost:3000/api/items/all')
 
         return {
@@ -22,6 +24,7 @@ Index.getInitialProps = async function() {
             count: res.data.count,
             pages: res.data.pages,
             page: res.data.page,
+            user: user
         }  
     } catch(err) {
         console.log(err)

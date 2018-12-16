@@ -12,12 +12,30 @@ const User = mongoose.model('User');
 
 
 //Using Passport Middleware - strategy name: local, and pass it our options
-exports.login = passport.authenticate('local', {
-  failureRedirect: '/login',
-  //failureFlash: 'Failed login!',
-  successRedirect: '/add',
-  //successFlash: 'Успешный логин!'
-})
+// exports.login = passport.authenticate('local', {
+//   failureRedirect: '/login',
+//   //failureFlash: 'Failed login!',
+//   successRedirect: '/add',
+//   //successFlash: 'Успешный логин!'
+// })
+
+
+
+//exports.login = passport.authenticate('local');
+exports.login = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (user) {
+      req.login(user, (err) => {
+        return res.status(200).send('You were authenticated & logged innn!');
+      })
+    } else {
+        res.status(403).send('ACCESS DENIED')
+    }
+})(req, res, next)
+}
+
+
+
 
  
 
@@ -35,11 +53,25 @@ exports.isLoggedIn = (req, res, next) => {
  
   };
 
+  
+// Check if Admin!
+exports.isAdmin = (req, res, next) => {
+  if(req.isAuthenticated()) {
+    if (req.user.email === process.env.ADMIN) {
+      next() //carry on! they are logged in!
+      return;
+    }
+  };
+  console.log('CHECKING ADMIN.....FAIL!!')
+  res.status(500).send('You have to be ADMIN!!');
+};
+
+
 // Logout
 exports.logout = (req, res) => {
     console.log('log out')
     req.logout();
     req.session.destroy();
-    //res.redirect('/');
+    res.send('log out');
   };
 

@@ -3,7 +3,9 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
-  static getInitialProps({ renderPage }) {
+  static getInitialProps(ctx) {
+    const { renderPage } = ctx;
+ 
     // Step 1: Create an instance of ServerStyleSheet
     const sheet = new ServerStyleSheet();
 
@@ -12,17 +14,31 @@ export default class MyDocument extends Document {
       sheet.collectStyles(<App {...props} />),
     );
 
+    const { html, head, errorHtml, chunks } = renderPage();
+    const session = ctx.req.session;
+   // console.log ( 'DATATAAA> ', html, head, errorHtml, chunks  )
+
     // Step 3: Extract the styles as <style> tags
     const styleTags = sheet.getStyleElement();
 
     // Step 4: Pass styleTags as a prop
-    return { ...page, styleTags };
+    //return { ...page, styleTags };
+   return { ...page, styleTags, html, head, errorHtml, chunks, session };
   }
- 
+  
   render() {
     return (
       <html>
-        <Head>{this.props.styleTags}</Head>
+        <Head>
+        {this.props.styleTags}
+        <script
+            id="session"
+            type="application/json"
+            dangerouslySetInnerHTML={{ 
+              __html: JSON.stringify(this.props.session, null, 2)
+            }}
+          />
+        </Head>
         <body>
           <Main />
           <NextScript />

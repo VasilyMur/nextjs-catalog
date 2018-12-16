@@ -1,7 +1,7 @@
 import axios from 'axios';
 import FormStyles from '../styles/FormStyles';
 import Router from 'next/router';
-
+ 
 import City from './City';
 import Phone from './Phone';
 import Name from './Name';
@@ -26,8 +26,18 @@ class AddForm extends React.Component {
         errors: {},
         image: this.props.item && this.props.item.image || '',
         largeImage: this.props.item && this.props.item.largeImage || '',
-        roundTheClock: false
+        roundTheClock: false,
+        clientUser: ''
         
+    }
+
+    componentDidMount() {
+        const sessionParsed = JSON.parse(document.getElementById('session').textContent);
+        console.log(sessionParsed)
+        if ( sessionParsed.passport ) {
+            const { user } = sessionParsed.passport;
+            this.setState({ clientUser: user });
+        }
     }
   
     photoUpload = async (value) => {
@@ -120,7 +130,7 @@ class AddForm extends React.Component {
                     })
                     this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '', image: '',
                     largeImage: '' });
-     
+      
                     const id = this.props.item.slug;
                     Router.push({
                         pathname: '/item', query: {id: id}
@@ -197,7 +207,8 @@ class AddForm extends React.Component {
 
 
     render(){
-
+        const { clientUser } = this.state;
+        const { user } = this.props;
         const weekDays = [
             ['monday', 'Понедельник'], 
             ['tuesday', 'Вторник'], 
@@ -209,44 +220,46 @@ class AddForm extends React.Component {
         ]
 
         return (
-            <FormStyles onSubmit={this.handleSubmit}>
-                <fieldset>
-                    <City name={this.state.city} handleChange={this.handleChange}/>
-                    <Phone name={this.state.phone} handleChange={this.handleChange}/>
-                    {this.state.errors.phone ? <span className="form__error">{this.state.errors.phone}</span> : ''}
-                    <Name name={this.state.name} handleChange={this.handleChange}/>
-                    <Description name={this.state.description} handleChange={this.handleChange}/>
-                    <Url name={this.state.url} handleChange={this.handleChange}/>
-                    <Address name={this.state.address} handleChange={this.handleAddressChange}/>
-                    <Photo photo={this.state.image} handleChange={this.photoUpload}/>
-                    {this.state.image && <img src={this.state.image} alt="Upload Preview" />}
-
+            <React.Fragment>
+                { clientUser ||  user ? <FormStyles onSubmit={this.handleSubmit}>
                     <fieldset>
-                        <label>Часы Работы</label>
-                        <div className="workHours">
-                        { weekDays.map((res, i) => {
-                            const open = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].open : '';
-                            const close = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].close : '';
+                        <City name={this.state.city} handleChange={this.handleChange}/>
+                        <Phone name={this.state.phone} handleChange={this.handleChange}/>
+                        {this.state.errors.phone ? <span className="form__error">{this.state.errors.phone}</span> : ''}
+                        <Name name={this.state.name} handleChange={this.handleChange}/>
+                        <Description name={this.state.description} handleChange={this.handleChange}/>
+                        <Url name={this.state.url} handleChange={this.handleChange}/>
+                        <Address name={this.state.address} handleChange={this.handleAddressChange}/>
+                        <Photo photo={this.state.image} handleChange={this.photoUpload}/>
+                        {this.state.image && <img src={this.state.image} alt="Upload Preview" />}
 
-                            return <Hours handleChange={this.handleScheduleChange}
-                                                    errors={this.state.errors}
-                                                    key={i} 
-                                                    day={res[1]} 
-                                                    name={res[0]} 
-                                                    open={open} 
-                                                    close={close}/>
-                                        }) }
-                        </div>
+                        <fieldset>
+                            <label>Часы Работы</label>
+                            <div className="workHours">
+                            { weekDays.map((res, i) => {
+                                const open = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].open : '';
+                                const close = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].close : '';
+
+                                return <Hours handleChange={this.handleScheduleChange}
+                                                        errors={this.state.errors}
+                                                        key={i} 
+                                                        day={res[1]} 
+                                                        name={res[0]} 
+                                                        open={open} 
+                                                        close={close}/>
+                                            }) }
+                            </div>
+                        </fieldset>
+
+                        <label className="roundTheClock">
+                            Круглосуточно
+                            <input type='checkbox' name='roundTheClock' onChange={this.handleCheck}/>
+                        </label>
+
+                        <button type="submit">Add</button>
                     </fieldset>
-
-                    <label className="roundTheClock">
-                        Круглосуточно
-                        <input type='checkbox' name='roundTheClock' onChange={this.handleCheck}/>
-                    </label>
-
-                    <button type="submit">Add</button>
-                </fieldset>
-            </FormStyles>
+                </FormStyles> : '' }
+            </React.Fragment>
         )
     }
 }

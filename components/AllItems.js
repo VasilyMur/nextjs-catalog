@@ -5,16 +5,31 @@ import Pagination from './Pagination';
 
 
 class AllItems extends React.Component {
+    state = {
+        clientUser: ''
+    }
+
+    componentDidMount() {
+        const sessionParsed = JSON.parse(document.getElementById('session').textContent);
+        if ( sessionParsed.passport ) {
+            const { user } = sessionParsed.passport;
+            this.setState({ clientUser: user });
+        }
+    }
+
 
     render() {
-        const { items, page, pages, count, name } = this.props;
+        const { items, page, pages, count, name, user } = this.props;
+        const { clientUser } = this.state;
         if(!items) return null;
         
+
+
         return (
             <React.Fragment>
                 <h1>{name}</h1>
                     <ItemsList>{items.map((item, i) => {
-                        return <Item item={item} key={i}/>
+                        return <Item clientUser={clientUser} user={user} item={item} key={i}/>
                     })}</ItemsList>
                     <Pagination page={page} pages={pages} count={count}/>
             </React.Fragment>

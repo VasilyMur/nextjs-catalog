@@ -3,15 +3,18 @@ import Link from 'next/link';
 import ItemStyles from './styles/ItemStyles';
 
 class Item extends React.Component {
+
+
     render() {
-        const { item } = this.props;
+        const { item, user, clientUser } = this.props;
 
         return (
             <ItemStyles>
                 <ImgContainer> 
                     {item.image && <img src={item.image} alt={item.name} />}
-                    <EditLink><Link as={`/update/${item._id}`} href={ {pathname: '/update', query: {id: item._id}} }><a>Edit ✏️</a></Link></EditLink>
+                    { user || clientUser ? <EditLink><Link as={`/update/${item._id}`} href={ {pathname: '/update', query: {id: item._id}} }><a>Edit ✏️</a></Link></EditLink> : '' }
                 </ImgContainer>
+
                 <DescriptionContainer>
                     <h2><Link as={`/item/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>{item.name}</a></Link></h2>
                     <address>{item.location.address}</address>

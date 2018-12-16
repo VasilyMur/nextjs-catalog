@@ -16,11 +16,11 @@ router.get('/city/:city/:page', itemsController.getItemsByCity);
 
 router.get('/single/:id', itemsController.getSingleItem);
 
-// REMOVE AUTHCONTROLLER!!!
-router.post('/create', authController.isLoggedIn, itemsController.createItem);
+// AUTHCONTROLLER!!!
+router.post('/create', authController.isLoggedIn, authController.isAdmin, itemsController.createItem);
 
 router.get('/edit/:id', itemsController.editItem);
-router.post('/update/:id', itemsController.updateItem);
+router.post('/update/:id', authController.isLoggedIn, authController.isAdmin, itemsController.updateItem);
 
 // User Registration
 router.post(`/register`, 
