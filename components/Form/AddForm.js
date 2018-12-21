@@ -221,44 +221,49 @@ class AddForm extends React.Component {
 
         return (
             <React.Fragment>
-                { clientUser ||  user ? <FormStyles onSubmit={this.handleSubmit}>
-                    <fieldset>
-                        <City name={this.state.city} handleChange={this.handleChange}/>
-                        <Phone name={this.state.phone} handleChange={this.handleChange}/>
-                        {this.state.errors.phone ? <span className="form__error">{this.state.errors.phone}</span> : ''}
-                        <Name name={this.state.name} handleChange={this.handleChange}/>
-                        <Description name={this.state.description} handleChange={this.handleChange}/>
-                        <Url name={this.state.url} handleChange={this.handleChange}/>
-                        <Address name={this.state.address} handleChange={this.handleAddressChange}/>
-                        <Photo photo={this.state.image} handleChange={this.photoUpload}/>
-                        {this.state.image && <img src={this.state.image} alt="Upload Preview" />}
+                { clientUser ||  user ? 
+                    <React.Fragment>
+                        { this.props.item ? <h1>Update Form</h1> : <h1>Add Form</h1> }
+                        <FormStyles onSubmit={this.handleSubmit}>
+                            <fieldset>
+                                <City name={this.state.city} handleChange={this.handleChange}/>
+                                <Phone name={this.state.phone} handleChange={this.handleChange}/>
+                                {this.state.errors.phone ? <span className="form__error">{this.state.errors.phone}</span> : ''}
+                                <Name name={this.state.name} handleChange={this.handleChange}/>
+                                <Description name={this.state.description} handleChange={this.handleChange}/>
+                                <Url name={this.state.url} handleChange={this.handleChange}/>
+                                <Address name={this.state.address} handleChange={this.handleAddressChange}/>
+                                <Photo photo={this.state.image} handleChange={this.photoUpload}/>
+                                {this.state.image && <img src={this.state.image} alt="Upload Preview" />}
 
-                        <fieldset>
-                            <label>Часы Работы</label>
-                            <div className="workHours">
-                            { weekDays.map((res, i) => {
-                                const open = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].open : '';
-                                const close = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].close : '';
+                                <fieldset>
+                                    <label>Часы Работы</label>
+                                    <div className="workHours">
+                                    { weekDays.map((res, i) => {
+                                        const open = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].open : '';
+                                        const close = this.state.schedule[`${res[0]}`] ? this.state.schedule[`${res[0]}`].close : '';
 
-                                return <Hours handleChange={this.handleScheduleChange}
-                                                        errors={this.state.errors}
-                                                        key={i} 
-                                                        day={res[1]} 
-                                                        name={res[0]} 
-                                                        open={open} 
-                                                        close={close}/>
-                                            }) }
-                            </div>
-                        </fieldset>
+                                        return <Hours handleChange={this.handleScheduleChange}
+                                                                errors={this.state.errors}
+                                                                key={i} 
+                                                                day={res[1]} 
+                                                                name={res[0]} 
+                                                                open={open} 
+                                                                close={close}/>
+                                                    }) }
+                                    </div>
+                                </fieldset>
 
-                        <label className="roundTheClock">
-                            Круглосуточно
-                            <input type='checkbox' name='roundTheClock' onChange={this.handleCheck}/>
-                        </label>
+                                <label className="roundTheClock">
+                                    Круглосуточно
+                                    <input type='checkbox' name='roundTheClock' onChange={this.handleCheck}/>
+                                </label>
 
-                        <button type="submit">Add</button>
-                    </fieldset>
-                </FormStyles> : '' }
+                                <button type="submit">Add</button>
+                            </fieldset>
+                        </FormStyles>
+                    </React.Fragment> 
+                : '' }
             </React.Fragment>
         )
     }

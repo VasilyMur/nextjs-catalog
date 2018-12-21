@@ -1,10 +1,12 @@
 import LoginForm from '../components/LoginForm';
+import RegisterForm from '../components/RegisterForm';
 import styled from 'styled-components';
 
 const Login = (props) => {
         return (
             <Inner>
                 <LoginForm {...props}/>
+                <RegisterForm {...props}/>
             </Inner>
         ) 
 }

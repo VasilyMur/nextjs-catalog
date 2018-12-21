@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { consolidateStreamedStyles } from 'styled-components';
 import axios from 'axios';
 import AddForm from '../components/Form/AddForm';
 
@@ -12,7 +12,6 @@ class Update extends React.Component {
 
         return (
             <Inner>
-                <h1>Update Item</h1>
                 <Container>
                     <AddForm item={item} id={query.id}/>
                 </Container>
@@ -33,12 +32,13 @@ padding: 2rem;
 `;
   
 Update.getInitialProps = async function(context) {
- 
+
     try {
         const { id } = context.query;
 
         // !!!!!!!!!!!!! CHANGE LOCALHOST -->> to Relative Address!!
         const res = await axios.get(`http://localhost:3000/api/items/edit/${id}`);
+
         const item = {
             address: res.data.location.address,
             city: res.data.city,
@@ -61,9 +61,14 @@ Update.getInitialProps = async function(context) {
             image: res.data.image,
             largeImage: res.data.largeImage
         }      
+
        return { item };
+
     }catch(err) {
         console.log(err);
+        const e = new Error("Response not found");
+        e.code = "ENOENT";  // Triggers a 404
+        throw e;
     }
 
   }

@@ -15,12 +15,14 @@ Item.getInitialProps = async function(context) {
   try {
     const { id } = context.query
     const res = await axios.get(`http://localhost:3000/api/items/single/${id}`)
-    const item = res.data
-  
+    const item = res && res.data ? res.data : '';
+   
     return { item };
 
   } catch(err) {
-    console.log(err)
+      const e = new Error("Response not found");
+      e.code = "ENOENT";  // Triggers a 404
+      throw e;
   }
 
 }

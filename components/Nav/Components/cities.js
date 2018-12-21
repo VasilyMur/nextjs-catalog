@@ -10,24 +10,24 @@ class Cities extends React.Component {
                     <Country>
                         <Name>United States</Name>
                         <Places>
-                            <Link prefetch as={`/city/new-york`} href={ {pathname: '/city', query: { city: 'new-york', page: 0 }} }>
+                            <Link prefetch as={`/new-york`} href={ {pathname: '/city', query: { city: 'new-york', page: 0 }} }>
                                 <a>New York</a>
                             </Link>
-                            <Link href="/add"><a>Chicago</a></Link>
-                            <Link href="/add"><a>Las Vegas</a></Link>
-                            <Link href="/add"><a>Miami</a></Link>
+                            <Link href="#"><a>Chicago</a></Link>
+                            <Link href="#"><a>Las Vegas</a></Link>
+                            <Link href="#"><a>Miami</a></Link>
                         </Places>
                     </Country>
 
                     <Country>
                         <Name>Rest of the World</Name>
                         <Places>
-                        <Link prefetch as={`/city/moscow`} href={ {pathname: '/city', query: { city: 'moscow', page: 0 }} }>
+                        <Link prefetch as={`/moscow`} href={ {pathname: '/city', query: { city: 'moscow', page: 0 }} }>
                                 <a>Moscow</a>
                             </Link>
-                            <Link href="/add"><a>London</a></Link>
-                            <Link href="/add"><a>Kiev</a></Link>
-                            <Link href="/add"><a>Paris</a></Link>
+                            <Link href="#"><a>London</a></Link>
+                            <Link href="#"><a>Kiev</a></Link>
+                            <Link href="#"><a>Paris</a></Link>
                         </Places>
                     </Country>
                 </Wrapper>

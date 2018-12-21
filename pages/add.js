@@ -7,7 +7,6 @@ const Add = (props) => {
 
     return (
         <Inner>
-        <h1>Add Item</h1>
         <Container>
             <AddForm {...props}/>
         </Container>

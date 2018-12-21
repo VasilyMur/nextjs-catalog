@@ -42,11 +42,11 @@ class Nav extends React.Component {
                 { clientUser ? <li>
                     <a href="/add" className="city-main" >Add</a>
                 </li> : null }
-
+  
                 <li>
                     <Link
                         prefetch
-                        as={`/city/new-york`}
+                        as={`/new-york`}
                         href={{
                         pathname: '/city',
                         query: { city: 'new-york', page: 0 },
@@ -60,7 +60,7 @@ class Nav extends React.Component {
                 <li>
                     <Link
                         prefetch
-                        as={`/city/moscow`}
+                        as={`/moscow`}
                         href={{
                         pathname: '/city',
                         query: { city: 'moscow', page: 0 },

@@ -10,7 +10,12 @@ class AllItemsCity extends React.Component {
     
     render() {
         const { items, page, pages, count, query, cityLatLng } = this.props;
-        if(!query || !items ) return null;
+
+        if(!items.length) {
+            const e = new Error("Response not found");
+            e.code = "ENOENT";  // Triggers a 404
+            throw e;
+        }
 
         const { city } = query;
         const removeHyphen = city.replace(/-/g, ' ');

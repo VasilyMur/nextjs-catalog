@@ -21,7 +21,7 @@ router.post('/create', authController.isLoggedIn, authController.isAdmin, itemsC
 
 router.get('/edit/:id', itemsController.editItem);
 router.post('/update/:id', authController.isLoggedIn, authController.isAdmin, itemsController.updateItem);
-
+ 
 // User Registration
 router.post(`/register`, 
             userController.validateRegister,
