@@ -4,6 +4,7 @@ import Item from './Item';
 import PaginationCity from './PaginationCity';
 import StaticMap from './StaticMap';
 import Head from 'next/head';
+import TextContainer from './TextContainer';
 
 class AllItemsCity extends React.Component {
 
@@ -17,11 +18,11 @@ class AllItemsCity extends React.Component {
             const { user } = sessionParsed.passport;
             this.setState({ clientUser: user });
         }
-    }
+    } 
 
      
     render() {
-        const { items, page, pages, count, query, cityLatLng } = this.props;
+        const { items, page, pages, count, query, cityLatLng, text } = this.props;
         const { clientUser } = this.state;
 
         if(!items.length) {
@@ -50,9 +51,10 @@ class AllItemsCity extends React.Component {
                 </Head>
                 <h1>{cityHeader} Strip Clubs</h1>
                 <StaticMap cityLatLng={cityLatLng} city={city}/>
-                    <ItemsList>{items.map((item, i) => {
-                        return <Item clientUser={clientUser} item={item} key={i}/>
-                    })}</ItemsList>
+                <TextContainer textData={text}/>
+                <ItemsList>{items.map((item, i) => {
+                    return <Item clientUser={clientUser} item={item} key={i}/>
+                })}</ItemsList>
                     <PaginationCity city={query.city} page={page} pages={pages} count={count}/>
             </React.Fragment>
         )

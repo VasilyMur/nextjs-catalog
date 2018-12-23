@@ -3,10 +3,12 @@ import AllItems from '../components/AllItems';
 import styled from 'styled-components';
 
 
+
+
 const Index = (props) => {
         return (
             <Inner>
-                <AllItems {...props} name='Strip Club Reviews'/>
+                <AllItems items={props.items} name='Strip Club Reviews'/>
             </Inner>
         )
 } 
@@ -19,13 +21,27 @@ Index.getInitialProps = async function({ req }) {
         const user = req && req.user ? req.user : '';
         const res = await axios.get('http://localhost:3000/api/items/all')
 
-        return {
+
+        const items = {
             items: res.data.items,
             count: res.data.count,
             pages: res.data.pages,
             page: res.data.page,
-            user: user
-        }  
+            user: user,
+        }
+
+        return {
+            items,
+        }
+
+        // return {
+        //     items: res.data.items,
+        //     count: res.data.count,
+        //     pages: res.data.pages,
+        //     page: res.data.page,
+        //     user: user,
+        //     posts: posts.results
+        // }  
     } catch(err) {
         console.log(err)
     }
@@ -35,7 +51,7 @@ Index.getInitialProps = async function({ req }) {
 const Inner = styled.div`
 max-width: ${props => props.theme.maxWidth};
 margin: 0 auto;
-padding: 2rem;
+padding: ${props => props.theme.innerPadding};
 display: grid;
 justify-content: center;
 `;

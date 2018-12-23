@@ -18,7 +18,7 @@ class StaticMap extends React.Component {
                     query: { city: `${city}` },
                     }}> 
                     <a>
-                        <MapImg src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=12&size=800x150&key=${process.env.MAP_KEY}&markers=${lat},${lng}&scale=2`}/>
+                        <MapImg src={`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=11&size=960x150&key=${process.env.MAP_KEY}&markers=${lat},${lng}&scale=2`}/>
                     </a> 
                     </Link>
             </React.Fragment>
@@ -27,7 +27,7 @@ class StaticMap extends React.Component {
 }
 
 const MapImg = styled.img`
-    max-width: 600px;
+    max-width: 100%;
 `;
 
 export default StaticMap;

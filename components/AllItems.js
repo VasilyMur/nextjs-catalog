@@ -19,10 +19,10 @@ class AllItems extends React.Component {
 
 
     render() {
-        const { items, page, pages, count, name, user } = this.props;
+        const { items, page, pages, count, name, user } = this.props.items;
         const { clientUser } = this.state;
         if(!items.length) return null;
-        
+         
 
 
         return (

@@ -40,7 +40,7 @@ Map.getInitialProps = async function(context) {
 const InnerMap = styled.div`
 max-width: ${props => props.theme.maxWidth};
 margin: 0 auto;
-padding: 2rem;
+padding: ${props => props.theme.innerPadding};
 `;
 
 export default Map;

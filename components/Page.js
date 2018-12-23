@@ -13,6 +13,7 @@ const theme = {
     maxWidth: '1000px',
     maxWidthSingle: '840px',
     maxWidthFront: '600px',
+    innerPadding: '4rem 2rem',
     bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
   };
   
@@ -44,7 +45,16 @@ a {
   text-decoration: none;
   color: ${theme.black};
 }
-h1,h2,h3,h4,h5,h6 {
+
+h1 {
+    font-size: 3.5rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    margin: 0.5rem 0 2rem;
+    text-align: center;
+}
+
+h2,h3,h4,h5,h6 {
     font-size: 2.5rem;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;

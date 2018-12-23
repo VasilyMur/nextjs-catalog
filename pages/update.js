@@ -29,7 +29,7 @@ const Container = styled.div`
 const Inner = styled.div`
 max-width: ${props => props.theme.maxWidth};
 margin: 0 auto;
-padding: 2rem;
+padding: ${props => props.theme.innerPadding};
 `;
   
 Update.getInitialProps = async function({req}) {
