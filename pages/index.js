@@ -10,7 +10,7 @@ const Index = (props) => {
             </Inner>
         )
 } 
-  
+   
 
 Index.getInitialProps = async function({ req }) {
 

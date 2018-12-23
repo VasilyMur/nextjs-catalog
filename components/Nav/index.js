@@ -36,6 +36,7 @@ class Nav extends React.Component {
 
     render() {
         const { hover, clientUser } = this.state;
+
         return (
             <React.Fragment>
                 <NavStyles data-test="nav">
@@ -46,7 +47,7 @@ class Nav extends React.Component {
                 <li>
                     <Link
                         prefetch
-                        as={`/new-york`}
+                        as={`/city/new-york`}
                         href={{
                         pathname: '/city',
                         query: { city: 'new-york', page: 0 },
@@ -60,7 +61,7 @@ class Nav extends React.Component {
                 <li>
                     <Link
                         prefetch
-                        as={`/moscow`}
+                        as={`/city/moscow`}
                         href={{
                         pathname: '/city',
                         query: { city: 'moscow', page: 0 },
@@ -72,7 +73,7 @@ class Nav extends React.Component {
                 </li>
 
                 <li onMouseEnter={this.handleMouseOver} onMouseLeave={this.handleMouseOver} >
-                    <a href="#" className="city-main" >Cities</a>
+                    <a href="#" className="city-main" >All Cities</a>
                         { hover ? <Cities /> : ''}
                 </li>
 

@@ -14,7 +14,7 @@ class PaginationCity extends React.Component {
 
                 <Link 
                     prefetch
-                    as={`/${city}/page/${page - 1}`}
+                    as={`/city/${city}/page/${page - 1}`}
                     href={{
                     pathname: '/city',
                     query: { page: page - 1, city: city },
@@ -27,7 +27,7 @@ class PaginationCity extends React.Component {
                 <p>{count} Items Total</p>
                 <Link
                     prefetch
-                    as={`/${city}/page/${page + 1}`}
+                    as={`/city/${city}/page/${page + 1}`}
                     href={{
                     pathname: '/city',
                     query: { page: page + 1, city: city },

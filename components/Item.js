@@ -4,7 +4,7 @@ import ItemStyles from './styles/ItemStyles';
 
 class Item extends React.Component {
 
-
+ 
     render() {
         const { item, user, clientUser } = this.props;
 
@@ -12,15 +12,15 @@ class Item extends React.Component {
             <ItemStyles>
                 <ImgContainer> 
                     {item.image && <img src={item.image} alt={item.name} />}
-                    { user || clientUser ? <EditLink><Link as={`/update/${item._id}`} href={ {pathname: '/update', query: {id: item._id}} }><a>Edit ✏️</a></Link></EditLink> : '' }
+                    { user || clientUser ? <EditLink><a href={`/update/${item._id}`}>Edit ✏️</a></EditLink> : '' }
                 </ImgContainer>
 
                 <DescriptionContainer>
-                    <h2><Link as={`/${item.city}/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>{item.name}</a></Link></h2>
+                    <h2><Link as={`/city/${item.city}/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>{item.name}</a></Link></h2>
                     <address>{item.location.address}</address>
                     <City>{item.city}</City>
                     <Hours><span>Tuesday</span>: 10:00 - 22:00 </Hours>  
-                    <Description><p>{item.description.split(' ').slice(0, 27).join(' ')}... <Link as={`/${item.city}/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>read more</a></Link></p></Description>  
+                    <Description><p>{item.description.split(' ').slice(0, 27).join(' ')}... <Link as={`/city/${item.city}/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>read more</a></Link></p></Description>  
                 </DescriptionContainer>
             </ItemStyles>
         )

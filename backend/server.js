@@ -49,21 +49,21 @@ nextApp.prepare()
 
   // CITY PAGE
   // добавить /city везде!!!
-  server.get('/:city', (req, res) => {
+  server.get('/city/:city', (req, res) => {
     const actualPage = '/city';
     const queryParams = { city: req.params.city, page: '0' };
     nextApp.render(req, res, actualPage, queryParams);
   });
 
   // CITY Pagination
-  server.get('/:city/page/:page', (req, res) => {
+  server.get('/city/:city/page/:page', (req, res) => {
     const actualPage = '/city';
     const queryParams = { city: req.params.city, page: req.params.page };
     nextApp.render(req, res, actualPage, queryParams);
   });
 
   // CITY MAP
-  server.get('/:city/strip-clubs/map', (req, res) => {
+  server.get('/city/:city/map', (req, res) => {
     const actualPage = '/map';
     const queryParams = { city: req.params.city };
     nextApp.render(req, res, actualPage, queryParams);
@@ -71,7 +71,7 @@ nextApp.prepare()
 
 
 // SINGLE ITEM
-  server.get('/:city/:id', (req, res) => {
+  server.get('/city/:city/:id', (req, res) => {
     const actualPage = '/item';
     const queryParams = { id: req.params.id };
     nextApp.render(req, res, actualPage, queryParams);
@@ -93,18 +93,10 @@ nextApp.prepare()
     nextApp.render(req, res, actualPage, queryParams);
   });
 
-  server.get('/login/user/wp-admin', (req, res) => {
+  server.get('/login', (req, res) => {
     const actualPage = '/login';
     nextApp.render(req, res, actualPage);
   });
-
-  // //testing 1
-  // server.get('/update', (req, res) => {
-  //   const actualPage = '/update/:id';
-  //   const queryParams = { id: '' };
-  //   nextApp.render(req, res, actualPage, queryParams);
-  // });
-    // //testing 1
 
 
   server.get('*', (req, res) => {

@@ -1,33 +1,42 @@
 import styled from 'styled-components';
 import Link from 'next/link';
-
+ 
 class Cities extends React.Component {
 
     render() {
+
+        const usCities = [ 
+            {name: 'New York', slug: 'new-york' },
+            {name: 'Miami', slug: 'miami' },
+            {name: 'Los Angeles', slug: 'los-angeles' },
+            {name: 'Chicago', slug: 'chicago' },
+        ]
+        const nonUsCities = [ 
+            {name: 'London', slug: 'london' },
+            {name: 'Moscow', slug: 'moscow' },
+            {name: 'Kiev', slug: 'kiev' },
+        ]
+
         return (
             <Container>
                 <Wrapper>
                     <Country>
                         <Name>United States</Name>
                         <Places>
-                            <Link prefetch as={`/new-york`} href={ {pathname: '/city', query: { city: 'new-york', page: 0 }} }>
-                                <a>New York</a>
-                            </Link>
-                            <Link href="#"><a>Chicago</a></Link>
-                            <Link href="#"><a>Las Vegas</a></Link>
-                            <Link href="#"><a>Miami</a></Link>
+                            {usCities.map((res, i) => {
+                                return <Link key={i} prefetch as={`/city/${res.slug}`} href={ {pathname: '/city', query: { city: `${res.slug}`, page: 0 }} }>
+                                            <a>{res.name}</a></Link>
+                            })}
                         </Places>
                     </Country>
 
                     <Country>
                         <Name>Rest of the World</Name>
                         <Places>
-                        <Link prefetch as={`/moscow`} href={ {pathname: '/city', query: { city: 'moscow', page: 0 }} }>
-                                <a>Moscow</a>
-                            </Link>
-                            <Link href="#"><a>London</a></Link>
-                            <Link href="#"><a>Kiev</a></Link>
-                            <Link href="#"><a>Paris</a></Link>
+                            {nonUsCities.map((res, i) => {
+                                return <Link key={i} prefetch as={`/city/${res.slug}`} href={ {pathname: '/city', query: { city: `${res.slug}`, page: 0 }} }>
+                                            <a>{res.name}</a></Link>
+                            })}
                         </Places>
                     </Country>
                 </Wrapper>
@@ -41,11 +50,13 @@ const Container = styled.div`
     border-top: 10px solid #393939;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
     top: calc(100%);
-    width: 37%;
-    right: 10px;
+    width: 100%;
+    right: 0;
     z-index: 99999;
     background: #fff;
     text-transform: uppercase;
+    display: flex;
+    justify-content: flex-end;
 `;
 
 const Wrapper = styled.div`
@@ -53,6 +64,8 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
+    max-width: 600px;
+    margin-bottom: 2rem;
 `;
 
 const Country = styled.div`
@@ -64,12 +77,11 @@ const Name = styled.div`
 `;
 
 
-
 const Places = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     a {
-        line-height: 1.4;
+        line-height: 1.8;
         font-size: 1.4rem;
         font-weight: 500;
         color: #646464;

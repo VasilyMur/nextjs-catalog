@@ -13,6 +13,7 @@ import Photo from './Photo';
 
 class AddForm extends React.Component {
 
+
     state = {
         city: this.props.item && this.props.item.city || '',
         name: this.props.item && this.props.item.name || '',
@@ -26,19 +27,10 @@ class AddForm extends React.Component {
         errors: {},
         image: this.props.item && this.props.item.image || '',
         largeImage: this.props.item && this.props.item.largeImage || '',
-        roundTheClock: false,
-        clientUser: ''
-        
+        roundTheClock: false,    
     }
 
-    componentDidMount() {
-        const sessionParsed = JSON.parse(document.getElementById('session').textContent);
-        console.log(sessionParsed)
-        if ( sessionParsed.passport ) {
-            const { user } = sessionParsed.passport;
-            this.setState({ clientUser: user });
-        }
-    }
+
   
     photoUpload = async (value) => {
         console.log('uploading')
@@ -113,7 +105,6 @@ class AddForm extends React.Component {
             largeImage: this.state.largeImage,
         }
 
-        console.log(item)
 
 
         if (  !this.validatePhone() || !this.validateHours() || !this.state.image ) {
@@ -128,6 +119,7 @@ class AddForm extends React.Component {
                     }).catch((err) => {
                         console.log(err)
                     })
+
                     this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '', image: '',
                     largeImage: '' });
       
@@ -206,8 +198,9 @@ class AddForm extends React.Component {
     }
 
 
+
+
     render(){
-        const { clientUser } = this.state;
         const { user } = this.props;
         const weekDays = [
             ['monday', 'Понедельник'], 
@@ -219,9 +212,17 @@ class AddForm extends React.Component {
             ['sunday', 'Воскресение']
         ]
 
+            if (!user) {
+                const e = new Error("Response not found");
+                e.code = "ENOENT";  // Triggers a 404
+                throw e;
+            }
+
+  
+ 
         return (
             <React.Fragment>
-                { clientUser ||  user ? 
+                { user ? 
                     <React.Fragment>
                         { this.props.item ? <h1>Update Form</h1> : <h1>Add Form</h1> }
                         <FormStyles onSubmit={this.handleSubmit}>

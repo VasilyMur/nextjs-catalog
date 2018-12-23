@@ -7,7 +7,7 @@ import Pagination from './Pagination';
 class AllItems extends React.Component {
     state = {
         clientUser: ''
-    }
+    } 
 
     componentDidMount() {
         const sessionParsed = JSON.parse(document.getElementById('session').textContent);
@@ -21,7 +21,7 @@ class AllItems extends React.Component {
     render() {
         const { items, page, pages, count, name, user } = this.props;
         const { clientUser } = this.state;
-        if(!items) return null;
+        if(!items.length) return null;
         
 
 

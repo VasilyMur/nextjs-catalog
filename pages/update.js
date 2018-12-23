@@ -6,14 +6,15 @@ import AddForm from '../components/Form/AddForm';
 
 class Update extends React.Component {
 
+
     render() {
-        const { item, query } = this.props;
+        const { item, query, user } = this.props;
         if  (!item.name || !query.id) return null;
 
         return (
             <Inner>
                 <Container>
-                    <AddForm item={item} id={query.id}/>
+                    <AddForm item={item} id={query.id} user={user}/>
                 </Container>
             </Inner>
         )
@@ -31,13 +32,13 @@ margin: 0 auto;
 padding: 2rem;
 `;
   
-Update.getInitialProps = async function(context) {
-
+Update.getInitialProps = async function({req}) {
     try {
-        const { id } = context.query;
-
+        const { id } = req.params;
+        const user = req.user ? req.user : '';
         // !!!!!!!!!!!!! CHANGE LOCALHOST -->> to Relative Address!!
         const res = await axios.get(`http://localhost:3000/api/items/edit/${id}`);
+        
 
         const item = {
             address: res.data.location.address,
@@ -59,13 +60,12 @@ Update.getInitialProps = async function(context) {
             },
             slug: res.data.slug,
             image: res.data.image,
-            largeImage: res.data.largeImage
+            largeImage: res.data.largeImage,
         }      
 
-       return { item };
+       return { item, user };
 
     }catch(err) {
-        console.log(err);
         const e = new Error("Response not found");
         e.code = "ENOENT";  // Triggers a 404
         throw e;

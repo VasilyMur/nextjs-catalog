@@ -12,7 +12,7 @@ class StaticMap extends React.Component {
             <React.Fragment>
                 <Link
                     prefetch
-                    as={`/${city}/strip-clubs/map`}
+                    as={`/city/${city}/map`}
                     href={{
                     pathname: '/map',
                     query: { city: `${city}` },

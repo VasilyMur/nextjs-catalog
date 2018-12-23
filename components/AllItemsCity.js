@@ -7,15 +7,29 @@ import Head from 'next/head';
 
 class AllItemsCity extends React.Component {
 
-    
+    state = {
+        clientUser: '',
+    }
+ 
+    componentDidMount() {
+        const sessionParsed = JSON.parse(document.getElementById('session').textContent);
+        if ( sessionParsed.passport ) {
+            const { user } = sessionParsed.passport;
+            this.setState({ clientUser: user });
+        }
+    }
+
+     
     render() {
         const { items, page, pages, count, query, cityLatLng } = this.props;
+        const { clientUser } = this.state;
 
         if(!items.length) {
             const e = new Error("Response not found");
             e.code = "ENOENT";  // Triggers a 404
             throw e;
         }
+        //if(!items.length) return null;
 
         const { city } = query;
         const removeHyphen = city.replace(/-/g, ' ');
@@ -37,7 +51,7 @@ class AllItemsCity extends React.Component {
                 <h1>{cityHeader} Strip Clubs</h1>
                 <StaticMap cityLatLng={cityLatLng} city={city}/>
                     <ItemsList>{items.map((item, i) => {
-                        return <Item item={item} key={i}/>
+                        return <Item clientUser={clientUser} item={item} key={i}/>
                     })}</ItemsList>
                     <PaginationCity city={query.city} page={page} pages={pages} count={count}/>
             </React.Fragment>

@@ -17,12 +17,9 @@ const Add = (props) => {
 
 
 
-Add.getInitialProps = async function({ req }) { 
-    
+Add.getInitialProps = async function({ req }) {   
     try {
         const user = req && req.user ? req.user : '';
-        // CHANGE!!!!! to REAL PATH!! WHY RELATIVE нельзя???
-        // const res = await axios.get('http://localhost:3000/api/items/all')
         return {
             user: user
         }
