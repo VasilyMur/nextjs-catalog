@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 class LocationContainer extends React.Component {
     render() {
-        const { address, phone, url } = this.props.data;
+        const { address, phone, url, state } = this.props.data;
         return (
             <Container>
                 <p>Address: {address}</p>
+                <p>State: {state}</p>
                 <p>Phone: {phone}</p>
                 <p>Website: {url}</p>
                 <p>Entrance Fee: 30$</p>

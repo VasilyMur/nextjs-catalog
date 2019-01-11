@@ -43,6 +43,7 @@ Update.getInitialProps = async function({req}) {
         const item = {
             address: res.data.location.address,
             city: res.data.city,
+            state: res.data.state,
             description: res.data.description,
             lat: res.data.location.coordinates[1],
             lng: res.data.location.coordinates[0],

@@ -10,37 +10,42 @@ class PaginationCity extends React.Component {
         const {  page, pages, count, city } = this.props;
 
         return (
-            <PaginationStyles>                
+            <Container>
+                <PaginationStyles>                
 
-                <Link 
-                    prefetch
-                    as={`/city/${city}/page/${page - 1}`}
-                    href={{
-                    pathname: '/city',
-                    query: { page: page - 1, city: city },
-                    }}>
-                    <a className="prev" aria-disabled={page <= 1}>
-                    ← Prev
-                    </a>
+                    <Link 
+                        prefetch
+                        as={`/city/${city}/page/${page - 1}`}
+                        href={{
+                        pathname: '/city',
+                        query: { page: page - 1, city: city },
+                        }}>
+                        <a className="prev" aria-disabled={page <= 1}>
+                        ← Prev
+                        </a>
+                    </Link>
+                    <p>Page { page } of { pages }!</p>
+                    <p>{count} Items Total</p>
+                    <Link
+                        prefetch
+                        as={`/city/${city}/page/${page + 1}`}
+                        href={{
+                        pathname: '/city',
+                        query: { page: page + 1, city: city },
+                        }}>
+                        <a className="next" aria-disabled={page >= pages}>
+                            Next →
+                        </a>
                 </Link>
-                <p>Page { page } of { pages }!</p>
-                <p>{count} Items Total</p>
-                <Link
-                    prefetch
-                    as={`/city/${city}/page/${page + 1}`}
-                    href={{
-                    pathname: '/city',
-                    query: { page: page + 1, city: city },
-                    }}>
-                    <a className="next" aria-disabled={page >= pages}>
-                        Next →
-                    </a>
-            </Link>
-            </PaginationStyles>
+                </PaginationStyles>
+            </Container>
         )
     }
 }
 
-
+const Container = styled.div`
+    display: flex;
+    justify-content: center;
+`;
 
 export default PaginationCity;

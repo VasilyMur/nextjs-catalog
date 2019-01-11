@@ -3,6 +3,7 @@ import FormStyles from '../styles/FormStyles';
 import Router from 'next/router';
  
 import City from './City';
+import State from './State';
 import Phone from './Phone';
 import Name from './Name';
 import Description from './Description';
@@ -16,6 +17,7 @@ class AddForm extends React.Component {
 
     state = {
         city: this.props.item && this.props.item.city || '',
+        state: this.props.item && this.props.item.state || '',
         name: this.props.item && this.props.item.name || '',
         description: this.props.item && this.props.item.description || '',
         phone: this.props.item && this.props.item.phone || '',
@@ -92,6 +94,7 @@ class AddForm extends React.Component {
         e.preventDefault();
         const item = {
             city: this.state.city,
+            state: this.state.state,
             name: this.state.name,
             description: this.state.description,
             phone: this.state.phone,
@@ -104,7 +107,6 @@ class AddForm extends React.Component {
             image: this.state.image,
             largeImage: this.state.largeImage,
         }
-
 
 
         if (  !this.validatePhone() || !this.validateHours() || !this.state.image ) {
@@ -120,7 +122,7 @@ class AddForm extends React.Component {
                         console.log(err)
                     })
 
-                    this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '', image: '',
+                    this.setState({ city: '', state: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '', image: '',
                     largeImage: '' });
       
                     const id = this.props.item.slug;
@@ -140,7 +142,7 @@ class AddForm extends React.Component {
                 }).catch((err) => {
                     console.log(err)
                 })
-                this.setState({ city: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '', image: '',
+                this.setState({ city: '', state: '', name: '', description: '', phone: '', url: '', schedule: {}, address: '', lat: '', lng: '', image: '',
                 largeImage: '' });
             }
         }
@@ -228,6 +230,7 @@ class AddForm extends React.Component {
                         <FormStyles onSubmit={this.handleSubmit}>
                             <fieldset>
                                 <City name={this.state.city} handleChange={this.handleChange}/>
+                                <State name={this.state.state} handleChange={this.handleChange}/>
                                 <Phone name={this.state.phone} handleChange={this.handleChange}/>
                                 {this.state.errors.phone ? <span className="form__error">{this.state.errors.phone}</span> : ''}
                                 <Name name={this.state.name} handleChange={this.handleChange}/>

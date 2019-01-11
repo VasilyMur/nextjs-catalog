@@ -1,6 +1,10 @@
 import App,  { Container } from 'next/app';
 import Page from '../components/Page';
 
+import NextSeo from 'next-seo';
+// import your default seo configuration
+import SEO from '../next-seo.config';
+
 class MyApp extends App {
     static async getInitialProps({ Component, ctx }) {
         let pageProps = {};
@@ -16,6 +20,7 @@ class MyApp extends App {
         return(
             <Container>
                 <Page>
+                    <NextSeo config={SEO} />
                     <Component {...pageProps} />
                 </Page>
             </Container>

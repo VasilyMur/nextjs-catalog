@@ -11,7 +11,7 @@ const Items = (props) => {
                         Sick Fits! — Page {props.page} of {props.pages}
                     </title>
                 </Head>
-                <AllItems {...props}/>
+                <AllItems {...props}/> 
             </Inner>
         )
 }

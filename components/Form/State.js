@@ -1,4 +1,4 @@
-class City extends React.Component {
+class State extends React.Component {
 
     handleChange = (e) => {   
         const value = e.target.value;
@@ -9,11 +9,11 @@ class City extends React.Component {
     render() {
         return (
             <label> 
-                City
-                <input value={this.props.name}  type='text' placeholder='City' name='city' onChange={this.handleChange} required />
+                State
+                <input  value={this.props.name}  type="text" placeholder='State' name='state' onChange={this.handleChange} required />
             </label>
         )
     }
 }
 
-export default City;
+export default State;

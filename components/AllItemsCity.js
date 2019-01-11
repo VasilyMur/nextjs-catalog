@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import Item from './Item';
 import PaginationCity from './PaginationCity';
 import StaticMap from './StaticMap';
-import Head from 'next/head';
 import TextContainer from './TextContainer';
+import NextSeo from 'next-seo';
+import { capetalize } from '../helpers';
 
 class AllItemsCity extends React.Component {
 
@@ -23,6 +24,8 @@ class AllItemsCity extends React.Component {
      
     render() {
         const { items, page, pages, count, query, cityLatLng, text } = this.props;
+        const { page: realPage } = this.props.query;
+
         const { clientUser } = this.state;
 
         if(!items.length) {
@@ -33,22 +36,27 @@ class AllItemsCity extends React.Component {
         //if(!items.length) return null;
 
         const { city } = query;
-        const removeHyphen = city.replace(/-/g, ' ');
-        const cityCap = removeHyphen.split(' ');
-        const cityHeader = cityCap.map(res => {
-            return res.charAt(0).toUpperCase() + res.slice(1);
-        }).join(' ');
- 
-        const metaTitleMain = `${cityHeader} strip clubs - top ratings, locations and reviews`;
-        const metaTitlePaginated = `${cityHeader} clubs - page ${page} of ${pages}`;
+        const cityHeader = capetalize(city);
 
+        
         return (
             <React.Fragment>
-                 <Head>
-                    <title>
-                        { query.page === '0' ? metaTitleMain : metaTitlePaginated }
-                    </title>
-                </Head>
+                <NextSeo
+                    config={{
+                    noindex: realPage === '0' ? false : true,
+                    canonical: `/city/${city}`,
+                    title: `${cityHeader} strip clubs 2019 - photos, location and reviews`,
+                    description: `Best strip clubs in ${cityHeader}: Explore our online list of the top strip clubs based on location, hours, guest reviews and photos.`,
+                    openGraph: {
+                      type: 'website',
+                      locale: 'en_US',
+                      url: 'https://www.test.com/',
+                      title: `${cityHeader} strip clubs 2019 - photos, location and reviews`,
+                      description: `Best strip clubs in ${cityHeader}: Explore our online list of the top strip clubs based on location, hours, guest reviews and photos.`,
+                      site_name: 'Stripio',
+                    }
+                }}/>
+
                 <h1>{cityHeader} Strip Clubs</h1>
                 <StaticMap cityLatLng={cityLatLng} city={city}/>
                 <TextContainer textData={text}/>

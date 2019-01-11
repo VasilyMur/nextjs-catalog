@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Item from './Item';
 import Pagination from './Pagination';
+import NextSeo from 'next-seo';
 
 
 class AllItems extends React.Component {
@@ -16,17 +17,21 @@ class AllItems extends React.Component {
             this.setState({ clientUser: user });
         }
     }
-
+ 
 
     render() {
-        const { items, page, pages, count, name, user } = this.props.items;
+        const { items, page, pages, count, user, name } = this.props;
+        const { page: realPage } = this.props.query;
         const { clientUser } = this.state;
         if(!items.length) return null;
-         
-
 
         return (
             <React.Fragment>
+                <NextSeo
+                config={{
+                    noindex: realPage === '0' || realPage === undefined ? false : true,
+                    canonical: '/'
+                }}/>
                 <h1>{name}</h1>
                     <ItemsList>{items.map((item, i) => {
                         return <Item clientUser={clientUser} user={user} item={item} key={i}/>

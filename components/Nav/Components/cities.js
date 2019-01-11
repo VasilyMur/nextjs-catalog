@@ -7,7 +7,7 @@ class Cities extends React.Component {
 
         const usCities = [ 
             {name: 'New York', slug: 'new-york' },
-            {name: 'Miami', slug: 'miami' },
+            {name: 'Phoenix', slug: 'phoenix' },
             {name: 'Los Angeles', slug: 'los-angeles' },
             {name: 'Chicago', slug: 'chicago' },
         ]

@@ -8,7 +8,7 @@ class Pagination extends React.Component {
     render() {
   
         const {  page, pages, count } = this.props;
-
+ 
         return (
             <PaginationStyles>                
 
@@ -24,7 +24,7 @@ class Pagination extends React.Component {
                     </a>
                 </Link>
                 <p>Page { page } of { pages }!</p>
-                <p>{count} Items Total</p>
+                <TotalPages>{count} Items Total</TotalPages>
                 <Link
                     prefetch
                     as={`/items/page/${page + 1}`}
@@ -41,6 +41,10 @@ class Pagination extends React.Component {
     }
 }
 
-
+const TotalPages = styled.p`
+    @media only screen and (max-width: 710px) {
+      display: none;
+    }
+`;
 
 export default Pagination;

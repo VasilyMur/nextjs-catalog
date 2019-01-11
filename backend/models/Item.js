@@ -7,7 +7,12 @@ const itemSchema = new mongoose.Schema({
   city: {
     type: String,
     trim: true,
-    required: 'Введите город',
+    required: 'Enter city',
+  },
+  state: {
+    type: String,
+    trim: true,
+    required: 'Enter state',
   },
   name: {
     type: String,
@@ -139,6 +144,17 @@ const itemSchema = new mongoose.Schema({
     next();
     //TODO - make more resilien so slugs are unique
   });
+
+  //Get All Tags & Count - front page
+  itemSchema.statics.getCityList = function(state) {
+  // aggregate - returns Promise - that we await inside Controller
+  //return this.distinct('city', { state: state });
+  return this.aggregate([
+    { $match: { state: state } },
+    { $group: { _id: '$city', count: { $sum: 1 } } },
+    { $sort: { count: -1 } }
+  ]);
+};
   
   
   

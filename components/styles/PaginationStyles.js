@@ -10,9 +10,12 @@ const PaginationStyles = styled.div`
   margin: 2rem 0;
   border: 1px solid ${props => props.theme.lightgrey};
   border-radius: 10px;
-  & > * {
+  & > * { 
     margin: 0;
     padding: 15px 30px;
+    @media only screen and (max-width: 710px) {
+      padding: 7px 12px;
+    }
     border-right: 1px solid ${props => props.theme.lightgrey};
     &:last-child {
       border-right: 0;

@@ -89,6 +89,7 @@ exports.updateItem = async (req, res) => {
 
 }
 
+// CITY PAGE
 exports.getItemsByCity = async (req, res) => {
     try {
 
@@ -124,7 +125,32 @@ exports.getItemsByCity = async (req, res) => {
     }
 };
 
+// STATE PAGE
+exports.getItemsByState = async (req, res) => {
+    try {
+ 
+        const state = req.params.state;
+        const stateQuery = state || { $exists: true };
 
+        // Total for Each City
+        const cityPromise = await Item.getCityList(stateQuery);
+        // Total Cities
+        const countPromise = Item.countDocuments( {state: stateQuery } );
+
+        const [ items, total ] = await Promise.all([ cityPromise, countPromise ]);
+
+        const body = {
+            items,
+            total,
+        }
+
+        res.status(201).send(body)
+    } catch(err) {
+        console.log(err)
+    }
+};
+
+// MAP CITY 
 exports.getAllItemsCity = async (req, res) => {
     try {
  
@@ -138,6 +164,28 @@ exports.getAllItemsCity = async (req, res) => {
 
         const [ items, count ] = await Promise.all([ cityPromise, countPromise ]);
 
+        const body = {
+            items,
+            count,
+        }
+
+        res.status(201).send(body)
+    } catch(err) {
+        console.log(err)
+    }
+}
+
+// MAP STATE
+exports.getAllItemsState = async (req, res) => {
+    try {
+        const state = req.params.state;
+        const stateQuery = state || { $exists: true };
+        
+        const statePromise = Item
+            .find( {state: stateQuery });
+
+        const countPromise = Item.countDocuments( {state: stateQuery } );
+        const [ items, count ] = await Promise.all([ statePromise, countPromise ]);
         const body = {
             items,
             count,

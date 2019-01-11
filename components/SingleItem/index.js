@@ -22,12 +22,12 @@ class SingleItem extends Component {
     const { item } = this.props;
     if(!item) return null;
 
-    const { name, largeImage, title, location, phone, url, description, schedule, slug, city } = item;
+    const { name, largeImage, title, location, phone, url, description, schedule, slug, city, state } = item;
 
     const [ lng, lat ] = location.coordinates;
     const address = location.address;
 
-    const locationData = { address, phone, url }
+    const locationData = { address, phone, url, state }
  
     const marker = [
       {

@@ -19,7 +19,7 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 require('./handlers/passport');
 
-mongoose.connect(`${process.env.DATABASE}`, { useNewUrlParser: true })
+mongoose.connect(`${process.env.DATABASE}`, { useNewUrlParser: true, useCreateIndex: true })
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection.on('error', (err) => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
@@ -53,7 +53,7 @@ nextApp.prepare()
     const actualPage = '/city';
     const queryParams = { city: req.params.city, page: '0' };
     nextApp.render(req, res, actualPage, queryParams);
-  });
+  }); 
 
   // CITY Pagination
   server.get('/city/:city/page/:page', (req, res) => {
@@ -66,6 +66,22 @@ nextApp.prepare()
   server.get('/city/:city/map', (req, res) => {
     const actualPage = '/map';
     const queryParams = { city: req.params.city };
+    nextApp.render(req, res, actualPage, queryParams);
+  });
+
+    // STATE PAGE
+  // добавить /city везде!!!
+  server.get('/state/:state', (req, res) => {
+    const actualPage = '/state';
+    const queryParams = { state: req.params.state, page: '0' };
+    nextApp.render(req, res, actualPage, queryParams);
+  }); 
+
+  // State Pagination
+  server.get('/state/:state/page/:page', (req, res) => {
+    const actualPage = '/state';
+    const queryParams = { state: req.params.state, page: req.params.page };
+    console.log(queryParams)
     nextApp.render(req, res, actualPage, queryParams);
   });
 

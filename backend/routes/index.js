@@ -5,14 +5,17 @@ const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 
 
- 
+// FRONT PAGE
 router.get('/all', itemsController.getItems);
 router.get('/all/:page', itemsController.getItems);
 
-router.get('/clubs/:city', itemsController.getAllItemsCity);
+// MAP
+router.get('/allcity/:city', itemsController.getAllItemsCity);
+router.get('/allstate/:state', itemsController.getAllItemsState);
 
-//router.get('/city/:city', itemsController.getItemsByCity);
+router.get('/city/:city', itemsController.getItemsByCity);
 router.get('/city/:city/:page', itemsController.getItemsByCity);
+router.get('/state/:state', itemsController.getItemsByState);
 
 router.get('/single/:id', itemsController.getSingleItem);
 
