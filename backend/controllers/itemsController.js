@@ -156,9 +156,19 @@ exports.getAllItemsCity = async (req, res) => {
  
         const city = req.params.city;
         const cityQuery = city || { $exists: true };
+
+        var excludeFields = { 
+            schedule: false,
+            _id: false,
+            description: false,
+            phone: false,
+            url: false,
+            image: false,
+            largeImage: false
+        };
         
         const cityPromise = Item
-            .find( {city: cityQuery });
+            .find( {city: cityQuery }, excludeFields );
 
         const countPromise = Item.countDocuments( {city: cityQuery } );
 
@@ -175,24 +185,3 @@ exports.getAllItemsCity = async (req, res) => {
     }
 }
 
-// MAP STATE
-exports.getAllItemsState = async (req, res) => {
-    try {
-        const state = req.params.state;
-        const stateQuery = state || { $exists: true };
-        
-        const statePromise = Item
-            .find( {state: stateQuery });
-
-        const countPromise = Item.countDocuments( {state: stateQuery } );
-        const [ items, count ] = await Promise.all([ statePromise, countPromise ]);
-        const body = {
-            items,
-            count,
-        }
-
-        res.status(201).send(body)
-    } catch(err) {
-        console.log(err)
-    }
-}

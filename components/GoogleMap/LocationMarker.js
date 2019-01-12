@@ -15,10 +15,10 @@ toggleOpen = () => {
 }
 
 render() {
-    const { markerData } = this.props;
+    const { markerData, statePage } = this.props;
     const { position, ...itemData } = markerData;
 
-	return (
+	return ( 
       <Marker       
         onClick={this.toggleOpen}    
         position={position}      
@@ -26,7 +26,7 @@ render() {
       >
 
         { this.state.isOpen ? 
-          <LocationInfoWindow maxWidth={300} toggleOpen={this.toggleOpen} data={itemData}>
+          <LocationInfoWindow maxWidth={300} toggleOpen={this.toggleOpen} data={itemData} statePage={statePage}>
           </LocationInfoWindow> : null }
 
       </Marker>

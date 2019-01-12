@@ -41,13 +41,13 @@ class Nav extends React.Component {
             <React.Fragment>
                 <NavStyles data-test="nav">
                 { clientUser ? <li>
-                    <a href="/add" className="city-main" >Add</a>
+                    <a href="/add" className="city-main" >Add</a> 
                 </li> : null }
   
                 <li>
                     <Link
                         prefetch
-                        as={`/state/new-york`}
+                        as={`/marijuana-dispensaries/new-york`}
                         href={{
                         pathname: '/state',
                         query: { state: 'new-york' },
@@ -61,7 +61,7 @@ class Nav extends React.Component {
                 <li>
                     <Link
                         prefetch
-                        as={`/state/arizona`}
+                        as={`/marijuana-dispensaries/arizona`}
                         href={{
                         pathname: '/state',
                         query: { state: 'arizona', page: 0 },

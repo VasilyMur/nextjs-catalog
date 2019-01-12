@@ -47,47 +47,41 @@ nextApp.prepare()
   server.use(passport.session());
   server.use('/api/items/', routes);
 
-  // 1 - Category Marijuana Dispensaries
-  server.get('/marijuana-dispensaries', (req, res) => {
-    const actualPage = '/dispensaries';
-    //const queryParams = { city: req.params.city, page: '0' };
+  // CITY PAGE
+  // добавить /city везде!!!
+  server.get('/city/:city', (req, res) => {
+    const actualPage = '/city';
+    const queryParams = { city: req.params.city, page: '0' };
     nextApp.render(req, res, actualPage, queryParams);
   }); 
 
-  // 2 - State
-  server.get('/marijuana-dispensaries/:state', (req, res) => {
+  // CITY Pagination
+  server.get('/city/:city/page/:page', (req, res) => {
+    const actualPage = '/city';
+    const queryParams = { city: req.params.city, page: req.params.page };
+    nextApp.render(req, res, actualPage, queryParams);
+  });
+
+  // CITY MAP
+  server.get('/city/:city/map', (req, res) => {
+    const actualPage = '/map';
+    const queryParams = { city: req.params.city };
+    nextApp.render(req, res, actualPage, queryParams);
+  });
+
+    // STATE PAGE
+  // добавить /city везде!!!
+  server.get('/state/:state', (req, res) => {
     const actualPage = '/state';
     const queryParams = { state: req.params.state, page: '0' };
     nextApp.render(req, res, actualPage, queryParams);
   }); 
 
-  // 3 - City
-  server.get('/marijuana-dispensaries/:state/:city', (req, res) => {
-    const actualPage = '/city';
-    const queryParams = { city: req.params.city, page: '0', state: req.params.state };
-    nextApp.render(req, res, actualPage, queryParams);
-  }); 
-
-  // CITY Pagination
-  server.get('/marijuana-dispensaries/:state/:city/page/:page', (req, res) => {
-    const actualPage = '/city';
-    const queryParams = { city: req.params.city, page: req.params.page, state: req.params.state };
-    nextApp.render(req, res, actualPage, queryParams);
-  });
-
-  // CITY MAP
-  // server.get('/marijuana-dispensaries/:state/:city/:id/map', (req, res) => {
-  //   const actualPage = '/map';
-  //   const queryParams = { city: req.params.city, id: req.params.id, state: req.params.state };
-  //   nextApp.render(req, res, actualPage, queryParams);
-  // });
-
-
 
 // SINGLE ITEM
-  server.get('/marijuana-dispensaries/:state/:city/:id', (req, res) => {
+  server.get('/city/:city/:id', (req, res) => {
     const actualPage = '/item';
-    const queryParams = { id: req.params.id, state: req.params.state, city: req.params.city };
+    const queryParams = { id: req.params.id };
     nextApp.render(req, res, actualPage, queryParams);
   });
 

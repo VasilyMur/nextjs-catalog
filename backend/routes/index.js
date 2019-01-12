@@ -9,14 +9,14 @@ const authController = require('../controllers/authController');
 router.get('/all', itemsController.getItems);
 router.get('/all/:page', itemsController.getItems);
 
-// MAP
+// MAP - returns items with limited fields
 router.get('/allcity/:city', itemsController.getAllItemsCity);
-router.get('/allstate/:state', itemsController.getAllItemsState);
 
 router.get('/city/:city', itemsController.getItemsByCity);
 router.get('/city/:city/:page', itemsController.getItemsByCity);
+// State Page
 router.get('/state/:state', itemsController.getItemsByState);
-
+ 
 router.get('/single/:id', itemsController.getSingleItem);
 
 // AUTHCONTROLLER!!!

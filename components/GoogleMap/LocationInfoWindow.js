@@ -10,19 +10,32 @@ class  LocationInfoWindow extends React.Component {
 
     render() {
 
-        const { name, address, slug } = this.props.data;
+        const { name, address, state, city, slug, count } = this.props.data;
+        const { statePage } = this.props;
 
         return (
             <InfoWindow onCloseClick={this.toggle}>
+            { statePage ? 
+
                 <Link
-                    href={{
-                        pathname: `/item/${slug}`,
-                    }}> 
-                    <a>
-                        {name}<br></br>{address}
-                    </a> 
-                    </Link>
-                        
+                href={{
+                    pathname: `/marijuana-dispensaries/${state}/${city}`,
+                }}> 
+                <a>
+                <strong>{name}</strong><br></br>{address}
+                Number of Dispensaries: {count}
+                </a> 
+                </Link> :
+
+                <Link
+                href={{
+                    pathname: `/marijuana-dispensaries/${state}/${city}/${slug}`,
+                }}> 
+                <a>
+                <strong>{name}</strong><br></br>{address}
+                </a> 
+                </Link> }
+                   
             </InfoWindow>
      );
   }

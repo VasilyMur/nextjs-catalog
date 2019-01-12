@@ -1,7 +1,7 @@
 import axios from 'axios';
 import styled from 'styled-components';
 import MapContainer from '../components/GoogleMap/MapContainer.js';
-
+ 
 const Map = (props) => {
         return (
             <InnerMap>
@@ -17,7 +17,7 @@ const Map = (props) => {
             </InnerMap>
         )
 }
-
+ 
 
 Map.getInitialProps = async function(context) {
     try {

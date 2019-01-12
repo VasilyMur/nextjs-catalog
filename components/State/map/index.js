@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Link from 'next/link';
 
-class StaticMap extends React.Component {
+class Map extends React.Component {
     render() {
         const { latLng, state } = this.props;
         if(!latLng || !state) return null;
@@ -30,4 +30,4 @@ const MapImg = styled.img`
     max-width: 100%;
 `;
 
-export default StaticMap;
+export default Map;

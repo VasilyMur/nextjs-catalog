@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import Item from './Item';
-import PaginationCity from './PaginationCity';
-import StaticMap from './StaticMap';
-import TextContainer from './TextContainer';
-import NextSeo from 'next-seo';
-import { capetalize } from '../helpers';
+import Item from '../Item';
+import Pagination from './pagination';
 
-class AllItemsCity extends React.Component {
+import MapContainer from '../../components/GoogleMap/MapContainer.js';
+import TextContainer from '../TextContainer';
+import NextSeo from 'next-seo';
+import { capetalize } from '../../helpers';
+
+class CityPage extends React.Component {
 
     state = {
         clientUser: '',
@@ -23,7 +24,7 @@ class AllItemsCity extends React.Component {
 
      
     render() {
-        const { items, page, pages, count, query, cityLatLng, text } = this.props;
+        const { items, allItems, page, pages, count, query, cityLatLng, text } = this.props;
         const { page: realPage } = this.props.query;
 
         const { clientUser } = this.state;
@@ -35,7 +36,7 @@ class AllItemsCity extends React.Component {
         }
         //if(!items.length) return null;
 
-        const { city } = query;
+        const { city, state } = query;
         const cityHeader = capetalize(city);
 
         
@@ -55,15 +56,26 @@ class AllItemsCity extends React.Component {
                       description: `Best strip clubs in ${cityHeader}: Explore our online list of the top strip clubs based on location, hours, guest reviews and photos.`,
                       site_name: 'Stripio',
                     }
-                }}/>
+                }}/> 
 
                 <h1>{cityHeader} Strip Clubs</h1>
-                <StaticMap cityLatLng={cityLatLng} city={city}/>
+ 
+                { allItems.length ? <MapContainer mapCenter={cityLatLng} zoom={12} markers={allItems.map(res=> {
+                    return {
+                        position: {lat: res.location.coordinates[1], lng: res.location.coordinates[0]},
+                        name: res.name,
+                        city,
+                        state,
+                        address: res.location.address,
+                        slug: res.slug 
+                    }
+                })} /> : null }
+
                 <TextContainer textData={text}/>
                 <ItemsList>{items.map((item, i) => {
                     return <Item clientUser={clientUser} item={item} key={i}/>
                 })}</ItemsList>
-                    <PaginationCity city={query.city} page={page} pages={pages} count={count}/>
+                    <Pagination state={state} city={city} page={page} pages={pages} count={count}/>
             </React.Fragment>
         )
     }
@@ -80,4 +92,4 @@ const ItemsList = styled.div`
     }
 `;
 
-export default AllItemsCity;
+export default CityPage;

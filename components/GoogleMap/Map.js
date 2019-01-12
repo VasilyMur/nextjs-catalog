@@ -5,18 +5,27 @@ import LocationMarker from './LocationMarker';
 
 const Map = withGoogleMap((props) => {
 
+  const bounds = new window.google.maps.LatLngBounds();
+  props.markers.map(res => {
+    const { lat, lng } = res.position;
+    const latLng = new window.google.maps.LatLng(lat, lng);
+    bounds.extend(latLng);
+  });
+
+
 const markers = props.markers && props.markers.map((res, i) => {
-  return <LocationMarker key={i} markerData={res}/>
+  return <LocationMarker statePage={props.statePage} key={i} markerData={res}/>
 }) 
  
     return (
         <GoogleMap
-          defaultZoom={props.single ? 15 : 12}
+          ref={map => map && map.fitBounds(bounds)}
+          defaultZoom={props.zoom}
           defaultOptions={{ zoomControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT } }}
-          center={props.mapCenter}
+          defaultCenter={props.mapCenter}
           >
           {markers}
-        </GoogleMap>
+        </GoogleMap> 
   );
 })
 

@@ -43,7 +43,7 @@ class SingleItem extends Component {
     return (
       <React.Fragment>
         <InnerSingleTop>
-            <MapContainer mapCenter={{ lat, lng }} markers={marker} single={true}/>
+            <MapContainer mapCenter={{ lat, lng }} zoom={15} markers={marker} single={true}/>
             <SingleTitle>{name}</SingleTitle>
             <Head>
               <title>Клуб | {name}</title>

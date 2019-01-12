@@ -4,24 +4,25 @@ import ItemStyles from './styles/ItemStyles';
 import { capetalize } from '../helpers';
 
 class Item extends React.Component {
-
+ 
  
     render() {
         const { item, user, clientUser } = this.props;
+        const { city, state, slug, image, name, _id, location, description } = item;
 
         return (
             <ItemStyles>
                 <ImgContainer> 
-                    {item.image && <img src={item.image} alt={item.name} />}
-                    { user || clientUser ? <EditLink><a href={`/update/${item._id}`}>Edit ✏️</a></EditLink> : '' }
+                    {image && <img src={image} alt={name} />}
+                    { user || clientUser ? <EditLink><a href={`/update/${_id}`}>Edit ✏️</a></EditLink> : '' }
                 </ImgContainer>
 
                 <DescriptionContainer>
-                    <h2><Link as={`/city/${item.city}/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>{item.name}</a></Link></h2>
-                    <address>{item.location.address}</address>
-                    <City>{capetalize(item.city)}</City>
+                    <h2><Link as={`/marijuana-dispensaries/${state}/${city}/${slug}`} href={ {pathname: '/item', query: {id: slug}} }><a>{name}</a></Link></h2>
+                    <address>{location.address}</address>
+                    <City>{capetalize(city)}</City>
                     <Hours><span>Tuesday</span>: 10:00 - 22:00 </Hours>  
-                    <Description><p>{item.description.split(' ').slice(0, 27).join(' ')}... <Link as={`/city/${item.city}/${item.slug}`} href={ {pathname: '/item', query: {id: item.slug}} }><a>read more</a></Link></p></Description>  
+                    <Description><p>{description.split(' ').slice(0, 27).join(' ')}... <Link as={`/marijuana-dispensaries/${state}/${city}/${slug}`} href={ {pathname: '/item', query: {id: slug}} }><a>read more</a></Link></p></Description>  
                 </DescriptionContainer>
             </ItemStyles>
         )

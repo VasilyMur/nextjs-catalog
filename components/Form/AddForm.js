@@ -156,13 +156,11 @@ class AddForm extends React.Component {
             const place = dropdown.getPlace();
             const address = place.formatted_address
             const lat = place.geometry.location.lat()
-            const lng = place.geometry.location.lng()
-            
+            const lng = place.geometry.location.lng()     
             this.setState({ address, lat, lng })
         });
         this.setState({ address })
     }
-
 
     handleChange = (name, value) => {  
         this.setState({ [name]: value })

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import AllItemsState from '../components/AllItemsState';
+import StatePage from '../components/State';
 import styled from 'styled-components';
 
 import { getBlogPostAPI } from '../api';
@@ -9,25 +9,24 @@ import { getBlogPostAPI } from '../api';
 const State = (props) => {
         return (
             <Inner>
-                <AllItemsState {...props}/>
+                <StatePage {...props}/>
             </Inner>
         ) 
 }
   
   
-
+ 
 State.getInitialProps = async function(context) {
     try {
         // CHANGE!!!!! to REAL PATH!! WHY RELATIVE нельзя???
         const { state } = context.query;
-    
         const res = await axios.get(`http://localhost:3000/api/items/state/${state}`);
         const stateCoordinates = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${state}&key=${process.env.MAP_KEY}`);
         const { lat, lng } = stateCoordinates && stateCoordinates.data.results[0] ? stateCoordinates.data.results[0].geometry.location : '';
 
         const text = await getBlogPostAPI(`${state}`);
         //const text = await getBlogPostsAPI({ pageSize: 5 });
-
+ 
         return {
             items: res.data.items,
             count: res.data.total,
