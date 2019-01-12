@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Item from '../Item';
+import Item from './item';
 import Pagination from './pagination';
 
 import MapContainer from '../../components/GoogleMap/MapContainer.js';

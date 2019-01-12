@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Item from './Item';
+import Item from './City/item';
 import Pagination from './Pagination';
 import NextSeo from 'next-seo';
 

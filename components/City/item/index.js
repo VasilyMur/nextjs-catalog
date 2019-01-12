@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Link from 'next/link';
-import ItemStyles from './styles/ItemStyles';
-import { capetalize } from '../helpers';
+import ItemStyles from '../../styles/ItemStyles';
+import { capetalize } from '../../../helpers';
 
 class Item extends React.Component {
  

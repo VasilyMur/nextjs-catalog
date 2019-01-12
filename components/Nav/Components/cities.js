@@ -21,7 +21,7 @@ class Cities extends React.Component {
             <Container>
                 <Wrapper>
                     <Country>
-                        <Name>United States</Name>
+                        <Name>Vermont</Name>
                         <Places>
                             {usCities.map((res, i) => {
                                 return <Link key={i} prefetch as={`/city/${res.slug}`} href={ {pathname: '/city', query: { city: `${res.slug}`, page: 0 }} }>
@@ -31,7 +31,7 @@ class Cities extends React.Component {
                     </Country>
 
                     <Country>
-                        <Name>Rest of the World</Name>
+                        <Name>Alaska</Name>
                         <Places>
                             {nonUsCities.map((res, i) => {
                                 return <Link key={i} prefetch as={`/city/${res.slug}`} href={ {pathname: '/city', query: { city: `${res.slug}`, page: 0 }} }>
@@ -80,6 +80,7 @@ const Name = styled.div`
 const Places = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
     a {
         line-height: 1.8;
         font-size: 1.4rem;
